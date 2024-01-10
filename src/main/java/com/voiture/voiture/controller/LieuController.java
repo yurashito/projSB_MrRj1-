@@ -13,7 +13,7 @@ import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
-@RequestMapping("/lieu")
+@RequestMapping("/lieux")
 public class LieuController {
     private final LieuService LieuService;
 
@@ -22,7 +22,7 @@ public class LieuController {
         this.LieuService= LieuService;
     }
 
-    @GetMapping("/lieux")
+    @GetMapping
     public List<Lieu> selectAll() {
         return this.LieuService.select();
     }

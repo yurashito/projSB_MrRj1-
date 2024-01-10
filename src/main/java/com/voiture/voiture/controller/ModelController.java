@@ -13,7 +13,7 @@ import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
-@RequestMapping("/model")
+@RequestMapping("/models")
 public class ModelController {
     private final ModelService modelService;
 
@@ -22,7 +22,7 @@ public class ModelController {
         this.modelService= modelService;
     }
 
-    @GetMapping("/models")
+    @GetMapping
     public List<Model> selectAll() {
         return this.modelService.select();
     }

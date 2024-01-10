@@ -14,7 +14,7 @@ import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
-@RequestMapping("/marque")
+@RequestMapping("/marques")
 public class MarqueController {
     private final MarqueService marqueService;
 
@@ -23,7 +23,7 @@ public class MarqueController {
         this.marqueService= marqueService;
     }
 
-    @GetMapping("/marques")
+    @GetMapping
     public List<Marque> selectAll() {
         return this.marqueService.select();
     }
