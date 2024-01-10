@@ -14,7 +14,7 @@ import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
-@RequestMapping("/categorie")
+@RequestMapping("/categories")
 public class CategorieController {
     private final CategorieService CategorieService;
 
@@ -23,7 +23,7 @@ public class CategorieController {
         this.CategorieService= CategorieService;
     }
 
-    @GetMapping("/categories")
+    @GetMapping
     public List<Categorie> selectAll() {
         return this.CategorieService.select();
     }

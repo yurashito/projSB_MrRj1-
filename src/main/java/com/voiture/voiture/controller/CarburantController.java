@@ -14,7 +14,7 @@ import com.voiture.voiture.modele.*;
 import com.voiture.voiture.service.*;
 
 @RestController
-@RequestMapping("/carburant")
+@RequestMapping("/carburants")
 public class CarburantController {
     private final CarburantService CarburantService;
 
@@ -23,7 +23,7 @@ public class CarburantController {
         this.CarburantService= CarburantService;
     }
 
-    @GetMapping("/carburants")
+    @GetMapping
     public List<Carburant> selectAll() {
         return this.CarburantService.select();
     }

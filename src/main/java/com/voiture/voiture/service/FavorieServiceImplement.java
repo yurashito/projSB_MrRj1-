@@ -6,7 +6,7 @@ import com.voiture.voiture.modele.Favorie;
 import com.voiture.voiture.repository.FavorieRepository;
 
 import lombok.AllArgsConstructor;
-
+import java.util.*;
 @Service
 @AllArgsConstructor
 public class FavorieServiceImplement implements FavorieService  {
@@ -15,5 +15,9 @@ public class FavorieServiceImplement implements FavorieService  {
     @Override
     public Favorie CreerFavorie(Favorie favorie){
         return favorieRepository.save(favorie);
+    }
+
+    public List<Favorie> select(){
+        return this.favorieRepository.findAll();
     }
 }

@@ -14,7 +14,7 @@ import com.voiture.voiture.modele.BoiteDeVitesse;
 import com.voiture.voiture.service.*;
 
 @RestController
-@RequestMapping("/boiteDeVitesse")
+@RequestMapping("/boiteDeVitesses")
 public class BoiteDeVitesseController {
     private final BoiteDeVitesseService  BoiteDeVitesseService;
 
@@ -23,7 +23,7 @@ public class BoiteDeVitesseController {
         this.BoiteDeVitesseService= BoiteDeVitesseService;
     }
 
-    @GetMapping("/boiteDeVitesses")
+    @GetMapping
     public List<BoiteDeVitesse> selectAll() {
         return this.BoiteDeVitesseService.select();
     }
