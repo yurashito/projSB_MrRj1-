@@ -36,7 +36,7 @@ public class BoiteDeVitesseController {
 
     @PostMapping("/updateBoiteDeVitesse/{idBoiteDeVitesse}")
     public BoiteDeVitesse updateVoitureDefini(@PathVariable int idBoiteDeVitesse,@RequestBody BoiteDeVitesse modifier){
-        return this.BoiteDeVitesseService.updateBoiteDeVitesse(idBoiteDeVitesse, modifier);a
+        return this.BoiteDeVitesseService.updateBoiteDeVitesse(idBoiteDeVitesse, modifier);
     }
 
 }
