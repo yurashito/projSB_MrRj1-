@@ -27,5 +27,16 @@ public class CarburantService {
         return carburantRepository.save(carburant);
     }
 
+    public Carburant update(int idCarburant,Carburant modifier){
+        return this.carburantRepository.findById(idCarburant).map(
+            carburant ->{
+                // carburant.setIdCarburant(modifier.getIdCarburant());
+                carburant.setNomCarburant(modifier.getNomCarburant());
+                carburant.setEtat(modifier.getEtat());
+                return carburantRepository.save(carburant);
+            }
+        ).orElseThrow(() -> new RuntimeException("carburant pas trouver"));
+    }
+
 }
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +31,10 @@ public class ModelController {
     @PostMapping("/create")
     public Model create(@RequestBody Model favorie){
         return modelService.Creer(favorie) ;
+    }
+
+     @PostMapping("/updateModel/{idModel}")
+    public Model updateModel(@PathVariable int idModel,@RequestBody Model modifier){
+        return this.modelService.update(idModel, modifier);
     }
 }

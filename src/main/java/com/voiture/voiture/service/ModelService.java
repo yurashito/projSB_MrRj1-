@@ -24,4 +24,15 @@ public class ModelService {
     public Model Creer(Model favorie){
         return ModelRepository.save(favorie);
     }
+
+    public Model update(int idModel,Model modifier){
+        return this.ModelRepository.findById(idModel).map(
+            model ->{
+                 model.setIdModel(modifier.getIdModel());
+                model.setNomModel(modifier.getNomModel());
+                model.setEtat(modifier.getEtat());
+                return MarqueRepository.save(model);
+            }
+        ).orElseThrow(() -> new RuntimeException("model pas trouver"));
+    }
 }

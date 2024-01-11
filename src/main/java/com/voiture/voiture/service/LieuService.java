@@ -24,4 +24,15 @@ public class LieuService {
     public Lieu Creer(Lieu favorie){
         return lieuRepository.save(favorie);
     }
+
+    public Lieu updateLieu(int idLieu,Lieu modifier){
+        return this.lieuRepository.findById(idLieu).map(
+            categorie ->{
+                // categorie.setIdLieu(modifier.getIdLieu());
+                categorie.setNomLieu(modifier.getNomLieu());
+                categorie.setEtat(modifier.getEtat());
+                return lieuRepository.save(categorie);
+            }
+        ).orElseThrow(() -> new RuntimeException("lieu pas trouver"));
+    }
 }
