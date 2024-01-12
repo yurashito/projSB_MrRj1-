@@ -25,4 +25,15 @@ public class MarqueService {
         return MarqueRepository.save(favorie);
     }
 
+    public Marque update(int idMarque,Marque modifier){
+        return this.MarqueRepository.findById(idMarque).map(
+            marque ->{
+                // marque.setIdMarque(modifier.getIdMarque());
+                marque.setNomMarque(modifier.getNomMarque());
+                marque.setEtat(modifier.getEtat());
+                return MarqueRepository.save(marque);
+            }
+        ).orElseThrow(() -> new RuntimeException("marque pas trouver"));
+    }
+
 }

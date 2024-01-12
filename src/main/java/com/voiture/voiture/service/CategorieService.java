@@ -25,4 +25,15 @@ public class CategorieService {
     public Categorie Creer(Categorie favorie){
         return categorieRepository.save(favorie);
     }
+
+    public Categorie update(int idCategorie,Categorie modifier){
+        return this.categorieRepository.findById(idCategorie).map(
+            categorie ->{
+                // categorie.setIdCategorie(modifier.getIdCategorie());
+                categorie.setNomCategorie(modifier.getNomCategorie());
+                categorie.setEtat(modifier.getEtat());
+                return categorieRepository.save(categorie);
+            }
+        ).orElseThrow(() -> new RuntimeException("categorie pas trouver"));
+    }
 }

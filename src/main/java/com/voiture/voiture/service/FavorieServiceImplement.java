@@ -20,4 +20,15 @@ public class FavorieServiceImplement implements FavorieService  {
     public List<Favorie> select(){
         return this.favorieRepository.findAll();
     }
+
+    public Favorie update(int idFavorie,Favorie modifier){
+        return this.favorieRepository.findById(idFavorie).map(
+            favorie ->{
+                favorie.setIdfavorie(modifier.getIdfavorie());
+                favorie.setIdannonce(modifier.getIdannonce());
+                favorie.setIdutilisateur(modifier.getIdutilisateur());
+                return favorieRepository.save(favorie);
+            }
+        ).orElseThrow(() -> new RuntimeException("favorie pas trouver"));
+    }
 }

@@ -24,5 +24,16 @@ public class BoiteDeVitesseService {
     public BoiteDeVitesse CreerBoiteDeVitesse(BoiteDeVitesse favorie){
         return boiteDeVitesseRepository.save(favorie);
     }
+
+    public BoiteDeVitesse updateBoiteDeVitesse(int idBoiteDeVitesse,BoiteDeVitesse modifier){
+        return this.boiteDeVitesseRepository.findById(idBoiteDeVitesse).map(
+            boiteDeVitesse ->{
+                // boiteDeVitesse.setIdBoiteDeVitesse(modifier.getIdBoiteDeVitesse());
+                boiteDeVitesse.setNomBoiteDeVitesse(modifier.getNomBoiteDeVitesse());
+                boiteDeVitesse.setEtat(modifier.getEtat());
+                return boiteDeVitesseRepository.save(boiteDeVitesse);
+            }
+        ).orElseThrow(() -> new RuntimeException("boite de vitesse pas trouver"));
+    }
    
 }
