@@ -4,6 +4,7 @@ package com.voiture.voiture.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
+@CrossOrigin("http://localhost:8100")
 @RequestMapping("/categories")
 public class CategorieController {
     private final CategorieService CategorieService;

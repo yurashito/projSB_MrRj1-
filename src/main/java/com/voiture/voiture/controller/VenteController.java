@@ -1,6 +1,7 @@
 package com.voiture.voiture.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,8 @@ import com.voiture.voiture.service.CarburantService;
 import com.voiture.voiture.service.VenteService;
 
 @RestController
+@CrossOrigin("http://localhost:8100")
+
 @RequestMapping("/ventes")
 
 public class VenteController {
