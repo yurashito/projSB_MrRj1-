@@ -1,7 +1,5 @@
 package com.voiture.voiture.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,26 +9,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.voiture.voiture.modele.*;
+import com.voiture.voiture.modele.Annonce;
 import com.voiture.voiture.service.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/voitures")
-public class VoitureController {
-    private final VoitureService voitureService;
-    
+@RequestMapping("/annonces")
+public class AnnonceController {
+    private final AnnonceService  annonceService;
+
     @Autowired
-    public VoitureController( VoitureService voitureService){
-        this.voitureService= voitureService;
+    public AnnonceController( AnnonceService annonceService){
+        this.annonceService= annonceService;
     }
 
-    @PostMapping("/updateVoiture/{idVoiture}")
-    public Voiture updateVoiture(@PathVariable int idVoiture,@RequestBody Voiture modifier){
-        return this.voitureService.updateVoiture(idVoiture, modifier);
+    @PostMapping("/create")
+    public Annonce create(@RequestBody Annonce annonce){
+        return annonceService.Creer(annonce) ;
     }
-
-
-
     
 }
