@@ -13,7 +13,7 @@ import com.voiture.voiture.service.FavorieService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@CrossOrigin("http://localhost:8100")
+@CrossOrigin
 @RequestMapping("/favories")
 @AllArgsConstructor
 public class FavorieController {

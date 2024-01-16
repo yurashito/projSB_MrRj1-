@@ -15,7 +15,7 @@ import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
-@CrossOrigin("http://localhost:8100")
+@CrossOrigin
 @RequestMapping("/utilisateurs")
 public class UtilisateurController {
     private final UtilisateurService UtilisateurService;
