@@ -16,7 +16,7 @@ import com.voiture.voiture.modele.BoiteDeVitesse;
 import com.voiture.voiture.service.*;
 
 @RestController
-@CrossOrigin("http://localhost:8100")
+@CrossOrigin
 @RequestMapping("/boiteDeVitesses")
 public class BoiteDeVitesseController {
     private final BoiteDeVitesseService  BoiteDeVitesseService;

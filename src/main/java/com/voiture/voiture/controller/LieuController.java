@@ -15,7 +15,7 @@ import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
-@CrossOrigin("http://localhost:8100")
+@CrossOrigin
 @RequestMapping("/lieux")
 public class LieuController {
     private final LieuService LieuService;

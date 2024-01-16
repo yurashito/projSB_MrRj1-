@@ -16,7 +16,7 @@ import com.voiture.voiture.modele.*;
 import com.voiture.voiture.service.*;
 
 @RestController
-@CrossOrigin("http://localhost:8100")
+@CrossOrigin
 @RequestMapping("/carburants")
 public class CarburantController {
     private final CarburantService CarburantService;
