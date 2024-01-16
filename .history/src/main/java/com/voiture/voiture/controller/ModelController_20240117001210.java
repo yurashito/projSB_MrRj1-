@@ -1,6 +1,5 @@
 package com.voiture.voiture.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,37 +10,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/lieux")
-public class LieuController {
-    private final LieuService LieuService;
+@RequestMapping("/models")
+public class ModelController {
+    private final ModelService modelService;
 
     @Autowired
-    public LieuController( LieuService LieuService){
-        this.LieuService= LieuService;
+    public ModelController( ModelService modelService){
+        this.modelService= modelService;
     }
 
     @GetMapping
-    public List<Lieu> selectAll() {
-        return this.LieuService.select();
+    public List<Model> selectAll() {
+        return this.modelService.select();
     }
 
     @PostMapping("/create")
-    public Lieu create(@RequestBody Lieu favorie){
-        return LieuService.Creer(favorie) ;
+    public Model create(@RequestBody Model favorie){
+        return modelService.Creer(favorie) ;
     }
 
-    @PostMapping("/updateVoitureDefini/{idLieu}")
-    public Lieu updateVoitureDefini(@PathVariable int idLieu,@RequestBody Lieu modifier){
-        return this.LieuService.updateLieu(idLieu, modifier);
+     @PostMapping("/updateModel/{idModel}")
+    public Model updateModel(@PathVariable int idModel,@RequestBody Model modifier){
+        return this.modelService.update(idModel, modifier);
     }
-    @PostMapping("/deleteLieu/{idLieu}")
-    public void deleteLieu(@PathVariable int idLieu){
-        this.LieuService.deleteLieu(idLieu);
-    }
-
 }

@@ -19,6 +19,4 @@ public class Favorie {
     int idannonce;
     @Column
     int idutilisateur;
-    @Column
-    int etat;
 }

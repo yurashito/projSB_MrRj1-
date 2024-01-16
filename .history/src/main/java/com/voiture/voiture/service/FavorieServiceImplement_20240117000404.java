@@ -31,12 +31,4 @@ public class FavorieServiceImplement implements FavorieService  {
             }
         ).orElseThrow(() -> new RuntimeException("favorie pas trouver"));
     }
-    public Favorie deleteFavorie(int idFavorie){
-        return this.favorieRepository.findById(idFavorie).map(
-            favorie ->{
-                favorie.setEtat(0);
-                return favorieRepository.save(favorie);
-            }
-        ).orElseThrow(() -> new RuntimeException("favorie pas trouver"));
-    }
 }

@@ -11,37 +11,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.voiture.voiture.service.*;
 import com.voiture.voiture.modele.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/lieux")
-public class LieuController {
-    private final LieuService LieuService;
+@RequestMapping("/categories")
+public class CategorieController {
+    private final CategorieService CategorieService;
 
     @Autowired
-    public LieuController( LieuService LieuService){
-        this.LieuService= LieuService;
+    public CategorieController( CategorieService CategorieService){
+        this.CategorieService= CategorieService;
     }
 
     @GetMapping
-    public List<Lieu> selectAll() {
-        return this.LieuService.select();
+    public List<Categorie> selectAll() {
+        return this.CategorieService.select();
     }
 
     @PostMapping("/create")
-    public Lieu create(@RequestBody Lieu favorie){
-        return LieuService.Creer(favorie) ;
+    public Categorie create(@RequestBody Categorie favorie){
+        return CategorieService.Creer(favorie) ;
     }
 
-    @PostMapping("/updateVoitureDefini/{idLieu}")
-    public Lieu updateVoitureDefini(@PathVariable int idLieu,@RequestBody Lieu modifier){
-        return this.LieuService.updateLieu(idLieu, modifier);
+    @PostMapping("/updateCategorie/{idCategorie}")
+    public Categorie updateCarburant(@PathVariable int idCategorie,@RequestBody Categorie modifier){
+        return this.CategorieService.update(idCategorie, modifier);
     }
-    @PostMapping("/deleteLieu/{idLieu}")
-    public void deleteLieu(@PathVariable int idLieu){
-        this.LieuService.deleteLieu(idLieu);
-    }
-
 }

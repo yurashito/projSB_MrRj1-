@@ -37,14 +37,6 @@ public class CarburantService {
             }
         ).orElseThrow(() -> new RuntimeException("carburant pas trouver"));
     }
-    public Carburant deleteCarburant(int idCarburant){
-        return this.carburantRepository.findById(idCarburant).map(
-            carburant ->{
-                carburant.setEtat(0);
-                return carburantRepository.save(carburant);
-            }
-        ).orElseThrow(() -> new RuntimeException("carburant suppr"));
-    }
 
 }
 

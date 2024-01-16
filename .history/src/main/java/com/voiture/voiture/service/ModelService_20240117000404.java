@@ -35,12 +35,4 @@ public class ModelService {
             }
         ).orElseThrow(() -> new RuntimeException("model pas trouver"));
     }
-    public Model deleteModel(int idModel){
-        return this.ModelRepository.findById(idModel).map(
-            model ->{
-                model.setEtat(0);
-                return ModelRepository.save(model);
-            }
-        ).orElseThrow(() -> new RuntimeException("model pas trouver"));
-    }
 }
