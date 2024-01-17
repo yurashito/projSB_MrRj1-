@@ -235,6 +235,3 @@ create or replace view V_Annonce as(
     join couleur
     on couleur.idCouleur = annonce.idCouleur
 );
-<!--  Manampy etat amin'ny favorie 
-ALTER TABLE favorie
-ADD COLUMN etat integer NOT NULL DEFAULT 1;

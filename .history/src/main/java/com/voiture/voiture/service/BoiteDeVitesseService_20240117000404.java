@@ -35,14 +35,5 @@ public class BoiteDeVitesseService {
             }
         ).orElseThrow(() -> new RuntimeException("boite de vitesse pas trouver"));
     }
-    public BoiteDeVitesse deleteBoiteDeVitesse(int idBoiteDeVitesse){
-        return this.boiteDeVitesseRepository.findById(idBoiteDeVitesse).map(
-            boiteDeVitesse ->{
-                // boiteDeVitesse.setIdBoiteDeVitesse(modifier.getIdBoiteDeVitesse());
-                boiteDeVitesse.setEtat(0);
-                return boiteDeVitesseRepository.save(boiteDeVitesse);
-            }
-        ).orElseThrow(() -> new RuntimeException("boite de vitesse pas trouver"));
-    }
    
 }

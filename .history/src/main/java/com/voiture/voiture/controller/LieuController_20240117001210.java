@@ -39,9 +39,5 @@ public class LieuController {
     public Lieu updateVoitureDefini(@PathVariable int idLieu,@RequestBody Lieu modifier){
         return this.LieuService.updateLieu(idLieu, modifier);
     }
-    @PostMapping("/deleteLieu/{idLieu}")
-    public void deleteLieu(@PathVariable int idLieu){
-        this.LieuService.deleteLieu(idLieu);
-    }
 
 }

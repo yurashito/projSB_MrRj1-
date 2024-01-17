@@ -39,10 +39,5 @@ public class BoiteDeVitesseController {
     public BoiteDeVitesse updateVoitureDefini(@PathVariable int idBoiteDeVitesse,@RequestBody BoiteDeVitesse modifier){
         return this.BoiteDeVitesseService.updateBoiteDeVitesse(idBoiteDeVitesse, modifier);
     }
-    
-    @PostMapping("/deleteBoiteDeVitesse/{idBoiteDeVitesse}")
-    public void deleteLieu(@PathVariable int idBoiteDeVitesse){
-        this.BoiteDeVitesseService.deleteBoiteDeVitesse(idBoiteDeVitesse);
-    }
 
 }

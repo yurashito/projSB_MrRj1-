@@ -36,12 +36,4 @@ public class CategorieService {
             }
         ).orElseThrow(() -> new RuntimeException("categorie pas trouver"));
     }
-    public Categorie deleteCategorie(int idCategorie){
-        return this.categorieRepository.findById(idCategorie).map(
-            categorie ->{
-                categorie.setEtat(0);
-                return categorieRepository.save(categorie);
-            }
-        ).orElseThrow(() -> new RuntimeException("categorie pas trouver"));
-    }
 }

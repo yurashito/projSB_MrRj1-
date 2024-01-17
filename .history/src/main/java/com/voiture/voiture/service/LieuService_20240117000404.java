@@ -35,12 +35,4 @@ public class LieuService {
             }
         ).orElseThrow(() -> new RuntimeException("lieu pas trouver"));
     }
-    public Lieu deleteLieu(int idLieu) {
-        return this.lieuRepository.findById(idLieu).map(
-            lieu -> {
-                lieu.setEtat(0); // Mettre l'état à 0 pour indiquer que le lieu est supprimé
-                return lieuRepository.save(lieu); 
-            }
-        ).orElseThrow(() -> new RuntimeException("Lieu non trouvé"));
-    }
 }

@@ -35,13 +35,5 @@ public class MarqueService {
             }
         ).orElseThrow(() -> new RuntimeException("marque pas trouver"));
     }
-    public Marque deleteMarque(int idMarque){
-        return this.MarqueRepository.findById(idMarque).map(
-            marque ->{
-                marque.setEtat(0);
-                return MarqueRepository.save(marque);
-            }
-        ).orElseThrow(() -> new RuntimeException("marque pas trouver"));
-    }
 
 }
