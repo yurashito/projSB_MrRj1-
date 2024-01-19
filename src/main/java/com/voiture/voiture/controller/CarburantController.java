@@ -36,10 +36,11 @@ public class CarburantController {
         return CarburantService.Creer(favorie) ;
     }
 
-     @PostMapping("/updateCarburant/{idCarburant}")
+    @PostMapping("/updateCarburant/{idCarburant}")
     public Carburant updateCarburant(@PathVariable int idCarburant,@RequestBody Carburant modifier){
         return this.CarburantService.update(idCarburant, modifier);
     }
+    
     @PostMapping("/deleteCarburant/{idCarburant}")
     public void deleteCarburant(@PathVariable int idCarburant){
          this.CarburantService.deleteCarburant(idCarburant);

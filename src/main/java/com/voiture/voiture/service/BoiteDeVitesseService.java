@@ -35,6 +35,7 @@ public class BoiteDeVitesseService {
             }
         ).orElseThrow(() -> new RuntimeException("boite de vitesse pas trouver"));
     }
+    
     public BoiteDeVitesse deleteBoiteDeVitesse(int idBoiteDeVitesse){
         return this.boiteDeVitesseRepository.findById(idBoiteDeVitesse).map(
             boiteDeVitesse ->{

@@ -1,5 +1,7 @@
 package com.voiture.voiture.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +25,19 @@ public class AnnonceController {
         this.annonceService= annonceService;
     }
 
+    @GetMapping
+    public List<Annonce> selectAll() {
+        return this.annonceService.select();
+    }
+
     @PostMapping("/create")
     public Annonce create(@RequestBody Annonce annonce){
         return annonceService.Creer(annonce) ;
+    }
+
+    @PostMapping("/validerAnnonce/{idAnnonce}")
+    public Annonce ValiderAnnonce(@PathVariable int idAnnonce){
+        return this.annonceService.ValidatioAnnonce(idAnnonce);
     }
     
 }
