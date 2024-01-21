@@ -1,5 +1,7 @@
 package com.voiture.voiture.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,20 @@ public class AnnonceService {
         this.annonceRepository = annonceRepository;
     }
 
+    public List<Annonce> select(){
+        return this.annonceRepository.findAll();
+    }
+
     public Annonce Creer(Annonce annonce){
         return annonceRepository.save(annonce);
+    }
+
+    public Annonce ValidatioAnnonce(int idAnnonce){
+        return this.annonceRepository.findById(idAnnonce).map(
+            annonce ->{
+                annonce.setEtatAnnonce(1);
+                return annonceRepository.save(annonce);
+            }
+        ).orElseThrow(() -> new RuntimeException("Annonce innexistante"));
     }
 }
