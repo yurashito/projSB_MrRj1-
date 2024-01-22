@@ -35,4 +35,12 @@ public class UtilisateurService {
             }
         ).orElseThrow(() -> new RuntimeException("Utilisateur pas trouver"));
     }
+
+    
+    public boolean verifUtilisateur(String nom , String mdp){
+        if(UtilisateurRepository.verifierUtilisateur(nom, mdp)!=null){
+            return true;
+        }
+        return false;
+    }
 }
