@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.voiture.voiture.connex.Connexion;
 import com.voiture.voiture.modele.Annonce;
 import com.voiture.voiture.modele.AnnonceParUtilisateur;
+import com.voiture.voiture.modele.ListeAnnonce;
 import com.voiture.voiture.service.*;
 
 @RestController
@@ -52,5 +53,15 @@ public class AnnonceController {
         connection.close();
         return a;
    }
-    
+
+   @GetMapping("/listesAnnnonces")
+    public List<ListeAnnonce> listeAnnonce ()throws Exception{
+        Connexion co = new Connexion();
+        Connection connection = co.getConnex();
+        Annonce a = new Annonce();
+        List<ListeAnnonce> liste = a.listeAnnonce(connection);
+        connection.close();
+        return liste;
+
+    }    
 }
