@@ -8,12 +8,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "message")
 public class Message {
     @Id
-    String id;
-
-    int idSend;
-    int idReceive;
-    String message;
-    Date dateMessage;
+    private String id;
+    private int idSend;
+    private int idReceive;
+    private String message;
+    private Date dateMessage;
 
 
     // Constructeurs, getters, setters, etc.
