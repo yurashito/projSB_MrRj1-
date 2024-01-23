@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.voiture.voiture.connex.Connexion;
 import com.voiture.voiture.modele.Annonce;
+import com.voiture.voiture.modele.AnnonceDetail;
 import com.voiture.voiture.modele.AnnonceParUtilisateur;
+import com.voiture.voiture.repository.AnnonceDetailRepository;
 import com.voiture.voiture.service.*;
 
 @RestController
@@ -22,12 +25,13 @@ import com.voiture.voiture.service.*;
 @RequestMapping("/annonces")
 public class AnnonceController {
     private final AnnonceService  annonceService;
+    private final AnnonceDetailRepository annonceDetailRepository;
 
     @Autowired
-    public AnnonceController( AnnonceService annonceService){
+    public AnnonceController( AnnonceService annonceService , AnnonceDetailRepository annonceDetailRepository){
         this.annonceService= annonceService;
+        this.annonceDetailRepository= annonceDetailRepository;
     }
-
     @GetMapping
     public List<Annonce> selectAll() {
         return this.annonceService.select();
@@ -52,5 +56,10 @@ public class AnnonceController {
         connection.close();
         return a;
    }
+
+   @GetMapping("/recherche")
+    public List<AnnonceDetail> rechercheAnnonce(@RequestParam String prixMin , @RequestParam String prixMax ,@RequestParam String idBoitedevitesse , @RequestParam String idCarburant , @RequestParam String idCategorie , @RequestParam String idLieu , @RequestParam String idMarque  , @RequestParam String idModel  ){
+        return annonceDetailRepository.rechercheAnnonce(prixMin ,   prixMax ,  idBoitedevitesse ,  idCarburant ,   idCategorie ,   idLieu ,   idMarque  ,   idModel);
+    }
     
 }
