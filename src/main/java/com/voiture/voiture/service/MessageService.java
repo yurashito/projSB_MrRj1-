@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,7 +32,7 @@ public class MessageService {
         testDocument.setIdSend(mess.getIdSend());
         testDocument.setIdReceive(mess.getIdReceive());
         testDocument.setMessage(mess.getMessage());
-        testDocument.setDateMessage(new Date(System.currentTimeMillis()));
+        testDocument.setDateMessage( new Date());
         // Initialisez les autres champs si nécessaire
         repository.save(testDocument);
     }
@@ -43,7 +43,17 @@ public class MessageService {
             Criteria.where("idReceive").is(idPersonne)
         );
         Query query = new Query(criteria);
-        return mongoTemplate.find(query, Message.class);
+        List<Message> messages = mongoTemplate.find(query, Message.class);
+        
+        // Ajouter des journaux de débogage
+        // System.out.println("Query: " + query);
+        // System.out.println("Nombre de messages trouvés: " + messages.size());
+        // for(int i = 0 ; i< messages.size() ; i++){
+        //     System.out.println(messages.get(i).getMessage());
+        // }
+    
+        return messages;
     }
+    
 
 }

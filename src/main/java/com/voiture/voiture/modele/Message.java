@@ -1,9 +1,8 @@
 package com.voiture.voiture.modele;
 
-import java.sql.Date;
-
 import javax.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;;
 
 @Document(collection = "message")
 public class Message {
@@ -80,15 +79,14 @@ public class Message {
     public void setMessage(String message) {
         this.message = message;
     }
-
-
+    
     public Date getDateMessage() {
         return dateMessage;
     }
 
-
     public void setDateMessage(Date dateMessage) {
         this.dateMessage = dateMessage;
     }
+
 
 }
