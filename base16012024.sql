@@ -174,6 +174,7 @@ create table favorie(
     idFavorie serial not null primary key,
     idAnnonce int not null,
     idUtilisateur int not null,
+    etat int not null default 1,
     foreign key(idAnnonce) references annonce(idAnnonce),
     foreign key(idUtilisateur) references utilisateur(idUtilisateur)
 );
@@ -235,6 +236,6 @@ create or replace view V_Annonce as(
     join couleur
     on couleur.idCouleur = annonce.idCouleur
 );
-<!--  Manampy etat amin'ny favorie 
-ALTER TABLE favorie
-ADD COLUMN etat integer NOT NULL DEFAULT 1;
+--  Manampy etat amin'ny favorie 
+-- ALTER TABLE favorie
+-- ADD COLUMN etat integer NOT NULL DEFAULT 1;
