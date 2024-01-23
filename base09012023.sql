@@ -251,3 +251,25 @@ create or replace view V_Annonce as(
     join couleur
     on couleur.idCouleur = voiture.idCouleur
 );
+
+CREATE OR REPLACE VIEW view_annonce_favori AS
+SELECT 
+    annonce.dateheureannonce,
+    annonce.description,
+    annonce.annee,
+    annonce.prix,
+    voiture.imatricule,
+    utilisateur.nomUtilisateur,
+    lieu.nomLieu,
+    favorie.idfavorie
+FROM annonce
+JOIN voiture ON annonce.idVoiture = voiture.idVoiture
+JOIN utilisateur ON annonce.idCreateur = utilisateur.idUtilisateur
+JOIN lieu ON annonce.idlieu = lieu.idlieu
+JOIN favorie ON favorie.idannonce = annonce.idAnnonce;
+
+
+create or replace view view_annoncePar_utilisateur AS
+SELECT utilisateur.idutilisateur, utilisateur.nomutilisateur ,annonce.dateheureannonce,annonce.description
+FROM annonce 
+JOIN utilisateur on annonce.idCreateur = utilisateur.idUtilisateur;
