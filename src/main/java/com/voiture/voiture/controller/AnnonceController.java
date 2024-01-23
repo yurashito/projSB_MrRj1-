@@ -1,5 +1,6 @@
 package com.voiture.voiture.controller;
 
+import java.sql.Connection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.voiture.voiture.connex.Connexion;
 import com.voiture.voiture.modele.Annonce;
+import com.voiture.voiture.modele.AnnonceParUtilisateur;
 import com.voiture.voiture.service.*;
 
 @RestController
@@ -39,5 +42,15 @@ public class AnnonceController {
     public Annonce ValiderAnnonce(@PathVariable int idAnnonce){
         return this.annonceService.ValidatioAnnonce(idAnnonce);
     }
+
+    @GetMapping("/annonceUtilisateur/{idUtilisateur}")
+   public AnnonceParUtilisateur selectByUser(@PathVariable int idUtilisateur)throws Exception{
+        Connexion co = new Connexion();
+        Connection connection = co.getConnex();
+        Annonce annonce = new Annonce();
+        AnnonceParUtilisateur a = annonce.get_annonce_by_utilisateur(connection,idUtilisateur );
+        connection.close();
+        return a;
+   }
     
 }

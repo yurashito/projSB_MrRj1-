@@ -2,6 +2,9 @@ package com.voiture.voiture.modele;
 
 import javax.persistence.Entity;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -9,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.voiture.voiture.connex.Connexion;
 
 @Entity
 @Table(name="annonce")
@@ -213,6 +218,40 @@ public class Annonce {
     }
 
     public Annonce() {}
+
+    public AnnonceParUtilisateur get_annonce_by_utilisateur(Connection connexion, int idUtilisateur) throws Exception{
+        
+        if(connexion == null || connexion.isClosed()){
+            connexion = Connexion.getConnex();
+         }
+        Utilisateur utilisateur = new Utilisateur();
+        idUtilisateur = utilisateur.getIdUtilisateur();
+        String sql = "SELECT * FROM view_annoncePar_utilisateur WHERE idutilisateur = ?";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+                
+                preparedStatement.setInt(1, idUtilisateur);
+                
+                
+                ResultSet resultSet = preparedStatement.executeQuery();
+                
+                if(resultSet.next()) {
+                    int id = resultSet.getInt("idutilisateur");
+                    String nomUtilisateur= resultSet.getString("nomutilisateur");
+                    String dateHeurAnnonce = resultSet.getString("dateheureannonce");
+                    String description = resultSet.getString("description");
+
+                    AnnonceParUtilisateur parUtilisateur = new AnnonceParUtilisateur(id,nomUtilisateur,dateHeurAnnonce,description);
+                    return parUtilisateur;      
+                }
+                
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            connexion.close();
+        }
+        return null; 
+    }
 
 
 }
