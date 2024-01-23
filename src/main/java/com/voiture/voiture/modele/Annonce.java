@@ -3,6 +3,7 @@ package com.voiture.voiture.modele;
 import javax.persistence.Entity;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -12,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+import java.util.*;
 import com.voiture.voiture.connex.Connexion;
 
 @Entity
@@ -195,7 +196,7 @@ public class Annonce {
     public void setEtatAnnonce(int etatAnnonce) {
         EtatAnnonce = etatAnnonce;
     }
-
+    // Annonce annonceFavorie = new Annonce(date, nom, voiture, imatricule,couleur,utilisateur, nomLieu,annee,prix,etatAnnonce );
     public Annonce(int annonce, Timestamp dateHeureAnnonce, String description, String imatricule, int idCategorie,
             int idMarque, int idCarburant, int idModel, int idBoitedevitesse, int idCouleur, int idCreateur, int idLieu,
             double annee, double prix, double pourcentageAlaina, int etatAnnonce) {
@@ -252,6 +253,47 @@ public class Annonce {
         }
         return null; 
     }
+
+    public List<ListeAnnonce> listeAnnonce (Connection connexion) throws Exception{
+
+        String sql="SELECT * FROM V_Annonce";        
+        List<ListeAnnonce> listeAnnonces = new ArrayList<>();
+
+        if(connexion == null || connexion.isClosed()){
+            connexion = Connexion.getConnex();
+        }
+
+        
+        try(PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+             while (resultSet.next()) {
+                Date date = resultSet.getDate("dateheureannonce");
+                String nom = resultSet.getString("description");
+                int voiture = resultSet.getInt("idVoiture");
+                String imatricule = resultSet.getString("imatricule");
+                String couleur = resultSet.getString("couleur");
+                String utilisateur = resultSet.getString("nomcreateur");
+                String nomLieu= resultSet.getString("nomlieu");
+                int annee = resultSet.getInt("annee") ;
+                double prix = resultSet.getDouble("prix");
+                int etatAnnonce = resultSet.getInt("etatannonce");
+//                 int   
+                ListeAnnonce annonce = new ListeAnnonce(nom, date, voiture, imatricule, couleur, utilisateur, nomLieu, annee, prix, etatAnnonce);
+                
+                listeAnnonces.add(annonce);
+            }   
+            
+    } 
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return listeAnnonces;       
+
+    }
+}
+
 
 
 }

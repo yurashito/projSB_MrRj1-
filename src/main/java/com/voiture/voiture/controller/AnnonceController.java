@@ -17,6 +17,7 @@ import com.voiture.voiture.connex.Connexion;
 import com.voiture.voiture.modele.Annonce;
 import com.voiture.voiture.modele.AnnonceDetail;
 import com.voiture.voiture.modele.AnnonceParUtilisateur;
+import com.voiture.voiture.modele.ListeAnnonce;
 import com.voiture.voiture.repository.AnnonceDetailRepository;
 import com.voiture.voiture.service.*;
 
@@ -57,9 +58,18 @@ public class AnnonceController {
         return a;
    }
 
+   @GetMapping("/listesAnnnonces")
+    public List<ListeAnnonce> listeAnnonce ()throws Exception{
+        Connexion co = new Connexion();
+        Connection connection = co.getConnex();
+        Annonce a = new Annonce();
+        List<ListeAnnonce> liste = a.listeAnnonce(connection);
+        connection.close();
+        return liste;
+
+    }    
    @GetMapping("/recherche")
     public List<AnnonceDetail> rechercheAnnonce(@RequestParam String prixMin , @RequestParam String prixMax ,@RequestParam String idBoitedevitesse , @RequestParam String idCarburant , @RequestParam String idCategorie , @RequestParam String idLieu , @RequestParam String idMarque  , @RequestParam String idModel  ){
         return annonceDetailRepository.rechercheAnnonce(prixMin ,   prixMax ,  idBoitedevitesse ,  idCarburant ,   idCategorie ,   idLieu ,   idMarque  ,   idModel);
     }
-    
 }
