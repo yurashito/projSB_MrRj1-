@@ -278,7 +278,7 @@ public class Annonce {
                 int annee = resultSet.getInt("annee") ;
                 double prix = resultSet.getDouble("prix");
                 int etatAnnonce = resultSet.getInt("etatannonce");
-//                    
+//                 int   
                 ListeAnnonce annonce = new ListeAnnonce(nom, date, voiture, imatricule, couleur, utilisateur, nomLieu, annee, prix, etatAnnonce);
                 
                 listeAnnonces.add(annonce);
