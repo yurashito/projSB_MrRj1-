@@ -1,6 +1,6 @@
 package com.voiture.voiture.modele;
 
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "message")
@@ -8,19 +8,11 @@ public class Message {
     @Id
     private String id;
 
-    private int idSend;
-    private int idReceive;
+    private String idSend;
+    private String idReceive;
 
     // Constructeurs, getters, setters, etc.
 
-    @Override
-    public String toString() {
-        return "MonEntite{" +
-                "id='" + id + '\'' +
-                ", idSend=" + idSend +
-                ", idReceive=" + idReceive +
-                '}';
-    }
 
     /**
      * @return String return the id
@@ -37,30 +29,30 @@ public class Message {
     }
 
     /**
-     * @return int return the idSend
+     * @return String return the idSend
      */
-    public int getIdSend() {
+    public String getIdSend() {
         return idSend;
     }
 
     /**
      * @param idSend the idSend to set
      */
-    public void setIdSend(int idSend) {
+    public void setIdSend(String idSend) {
         this.idSend = idSend;
     }
 
     /**
-     * @return int return the idReceive
+     * @return String return the idReceive
      */
-    public int getIdReceive() {
+    public String getIdReceive() {
         return idReceive;
     }
 
     /**
      * @param idReceive the idReceive to set
      */
-    public void setIdReceive(int idReceive) {
+    public void setIdReceive(String idReceive) {
         this.idReceive = idReceive;
     }
 
