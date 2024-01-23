@@ -1,0 +1,1 @@
+ db.message.insertOne({idSend : 1 , idReceive : 2 ,message : "mess" , dateMessage : new Date()});

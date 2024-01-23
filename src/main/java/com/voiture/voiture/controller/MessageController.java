@@ -13,7 +13,7 @@ import com.voiture.voiture.service.MessageService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping("/messages")
 public class MessageController {
     private final MessageService messageService;
 
@@ -22,14 +22,19 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @GetMapping("/get-all-documents")
+    @GetMapping("/")
     public List<Message> getAllDocuments() {
         return messageService.getAllDocuments();
     }
 
-    @PostMapping("/insert-test-document")
-    public void insertTestDocument(@RequestBody Message mess) {
-        messageService.insertTestDocument(mess);
+    @PostMapping("/envoyerMessage")
+    public void EnvoyerMessage(@RequestBody Message mess) {
+        messageService.EnvoyerMessage(mess);
+    }
+
+    @PostMapping("/MessageParUtilisateur")
+    public void MessageParUtilisateur(@RequestBody int idPersonne) {
+        messageService.MessageParUtilisateur(idPersonne);
     }
 }
 
