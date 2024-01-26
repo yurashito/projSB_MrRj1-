@@ -84,5 +84,10 @@ public class AnnonceController {
     public List<AnnonceDetail> historiqueAnnonceUtilisateur(@RequestParam int idCreateur) {
         return annonceRepository.historiqueAnnonceUtilisateur(idCreateur);
     }
+
+    @PostMapping("/modificationStatuAnnonce")
+    public Annonce ChangerStatuAnnonce(@RequestParam int idAnnonce,@RequestParam int etat){
+        return this.annonceService.ModificationStatuAnnonce(idAnnonce,etat);
+    }
     
 }
