@@ -60,4 +60,13 @@ public class AnnonceService {
         }
         return false;
     }
+
+    public Annonce ModificationStatuAnnonce(int idAnnonce , int etat){
+        return this.annonceRepository.findById(idAnnonce).map(
+            annonce ->{
+                annonce.setEtatAnnonce(etat);
+                return annonceRepository.save(annonce);
+            }
+        ).orElseThrow(() -> new RuntimeException("Annonce innexistante"));
+    }
 }
