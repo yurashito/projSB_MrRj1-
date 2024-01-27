@@ -236,6 +236,20 @@ create or replace view V_Annonce as(
     join couleur
     on couleur.idCouleur = annonce.idCouleur
 );
+
+CREATE or REPLACE view V_Annonce_Favorie AS
+select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricule , annonce.idCouleur as idCouleur , couleur.nomCouleur as couleur, 
+    annonce.idCreateur as idCreateur , utilisateur.nomUtilisateur as nomCreateur , lieu.idLieu as idLieu , lieu.nomLieu as nomLieu,
+    Annee,Prix , PourcentageAlaina EtatAnnonce 
+    from annonce
+    join utilisateur
+    on utilisateur.idUtilisateur = annonce.idCreateur
+    join lieu
+    on lieu.idLieu = annonce.idLieu
+    join couleur
+    on couleur.idCouleur = annonce.idCouleur
+
+
 --  Manampy etat amin'ny favorie 
 -- ALTER TABLE favorie
 -- ADD COLUMN etat integer NOT NULL DEFAULT 1;

@@ -1,90 +1,198 @@
 package com.voiture.voiture.modele;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.*;
+import com.voiture.voiture.connex.Connexion;
 
 public class ListeAnnonce {
-    String nom;
-    Date date;
-    int idVoiture;
-    String imatricule;
-    String couleur;
-    String nomCreateur;
-    String nomLieu;
-    int annee;
-    double prix;
-    int etatAnnonce;
-    public ListeAnnonce(String nom, Date date, int idVoiture, String imatricule, String couleur, String nomCreateur,
-            String nomLieu, int annee, double prix, int etatAnnonce) {
-        this.nom = nom;
-        this.date = date;
-        this.idVoiture = idVoiture;
-        this.imatricule = imatricule;
-        this.couleur = couleur;
-        this.nomCreateur = nomCreateur;
-        this.nomLieu = nomLieu;
-        this.annee = annee;
-        this.prix = prix;
-        this.etatAnnonce = etatAnnonce;
+    
+    int IdAnnonce;
+    String Description;
+    Timestamp  DateHeureAnnonce ;
+    String Imatricule ;
+    String  Couleur; 
+    String NomCreateur ;
+    String NomLieu;
+    int Annee;
+    double Prix ;
+    int EtatAnnonce;
+    
+    
+    public int getIdAnnonce() {
+        return IdAnnonce;
     }
-    public String getNom() {
-        return nom;
+
+    public void setIdAnnonce(int idAnnonce) {
+        IdAnnonce = idAnnonce;
     }
-    public void setNom(String nom) {
-        this.nom = nom;
+
+    public String getDescription() {
+        return Description;
     }
-    public Date getDate() {
-        return date;
+
+    public void setDescription(String description) {
+        Description = description;
     }
-    public void setDate(Date date) {
-        this.date = date;
+
+    public Timestamp getDateHeureAnnonce() {
+        return DateHeureAnnonce;
     }
-    public int getIdVoiture() {
-        return idVoiture;
+
+    public void setDateHeureAnnonce(Timestamp dateHeureAnnonce) {
+        DateHeureAnnonce = dateHeureAnnonce;
     }
-    public void setIdVoiture(int idVoiture) {
-        this.idVoiture = idVoiture;
-    }
+
     public String getImatricule() {
-        return imatricule;
+        return Imatricule;
     }
+
     public void setImatricule(String imatricule) {
-        this.imatricule = imatricule;
+        Imatricule = imatricule;
     }
+
     public String getCouleur() {
-        return couleur;
+        return Couleur;
     }
+
     public void setCouleur(String couleur) {
-        this.couleur = couleur;
+        Couleur = couleur;
     }
+
     public String getNomCreateur() {
-        return nomCreateur;
+        return NomCreateur;
     }
+
     public void setNomCreateur(String nomCreateur) {
-        this.nomCreateur = nomCreateur;
+        NomCreateur = nomCreateur;
     }
+
     public String getNomLieu() {
-        return nomLieu;
+        return NomLieu;
     }
+
     public void setNomLieu(String nomLieu) {
-        this.nomLieu = nomLieu;
+        NomLieu = nomLieu;
     }
+
     public int getAnnee() {
-        return annee;
+        return Annee;
     }
+
     public void setAnnee(int annee) {
-        this.annee = annee;
+        Annee = annee;
     }
+
     public double getPrix() {
-        return prix;
+        return Prix;
     }
+
     public void setPrix(double prix) {
-        this.prix = prix;
+        Prix = prix;
     }
+
     public int getEtatAnnonce() {
-        return etatAnnonce;
+        return EtatAnnonce;
     }
+
     public void setEtatAnnonce(int etatAnnonce) {
-        this.etatAnnonce = etatAnnonce;
+        EtatAnnonce = etatAnnonce;
     }
     
+
+    public ListeAnnonce(int idAnnonce, String description, Timestamp dateHeureAnnonce, String imatricule,
+            String couleur, String nomCreateur, String nomLieu, int annee, double prix, int etatAnnonce) {
+        IdAnnonce = idAnnonce;
+        Description = description;
+        DateHeureAnnonce = dateHeureAnnonce;
+        Imatricule = imatricule;
+        Couleur = couleur;
+        NomCreateur = nomCreateur;
+        NomLieu = nomLieu;
+        Annee = annee;
+        Prix = prix;
+        EtatAnnonce = etatAnnonce;
+    }
+
+    public ListeAnnonce() {
+    }
+
+    public List<ListeAnnonce> listeAnnonce (Connection connexion) throws Exception{
+
+        String sql="SELECT * FROM V_Annonce";        
+        List<ListeAnnonce> listeAnnonces = new ArrayList<>();
+
+        if(connexion == null || connexion.isClosed()){
+            connexion = Connexion.getConnex();
+        }
+     try(PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+             while (resultSet.next()) {
+                int idAnnonce = resultSet.getInt("idAnnonce");
+                String description = resultSet.getString("description");
+                Timestamp dateHeure = resultSet.getTimestamp("dateheureannonce");
+                String imatricule = resultSet.getString("imatricule");
+                String couleur = resultSet.getString("couleur");
+                String nomCreateur = resultSet.getString("nomCreateur");
+                String nomLieu= resultSet.getString("nomLieu");
+                int annee = resultSet.getInt("annee") ;
+                double prix = resultSet.getDouble("prix");
+                int etatAnnonce = resultSet.getInt("etatAnnonce");
+ 
+                ListeAnnonce annonce = new ListeAnnonce(idAnnonce,description,dateHeure,imatricule,couleur,nomCreateur,nomLieu,annee,prix,etatAnnonce);
+                
+                listeAnnonces.add(annonce);
+            }   
+            
+    } 
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return listeAnnonces;       
+
+    }
+}
+
+public ListeAnnonce listeAnnonceParUtilisateur(Connection connexion, int idUtilisateur) throws Exception{
+        
+        if(connexion == null || connexion.isClosed()){
+            connexion = Connexion.getConnex();
+         }
        
+        String sql = "SELECT * FROM V_Annonce WHERE idcreateur = ?";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+                
+                preparedStatement.setInt(1, idUtilisateur);
+             
+                ResultSet resultSet = preparedStatement.executeQuery();
+                
+                if(resultSet.next()) {
+                    int idAnnonce = resultSet.getInt("idAnnonce");
+                    String description = resultSet.getString("description");
+                    Timestamp dateHeure = resultSet.getTimestamp("dateheureannonce");
+                    String imatricule = resultSet.getString("imatricule");
+                    String couleur = resultSet.getString("couleur");
+                    String nomCreateur = resultSet.getString("nomCreateur");
+                    String nomLieu= resultSet.getString("nomLieu");
+                    int annee = resultSet.getInt("annee") ;
+                    double prix = resultSet.getDouble("prix");
+                    int etatAnnonce = resultSet.getInt("etatAnnonce");
+
+                    ListeAnnonce annonceParUtilisateur = new ListeAnnonce(idAnnonce,description,dateHeure,imatricule,couleur,nomCreateur,nomLieu,annee,prix,etatAnnonce);
+                    return annonceParUtilisateur;      
+                }
+                
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            connexion.close();
+        }
+        return null; 
+    }
 }
