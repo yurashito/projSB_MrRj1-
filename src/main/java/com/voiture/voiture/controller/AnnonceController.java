@@ -56,25 +56,26 @@ public class AnnonceController {
     }
 
     @GetMapping("/annonceUtilisateur/{idUtilisateur}")
-   public AnnonceParUtilisateur selectByUser(@PathVariable int idUtilisateur)throws Exception{
+   public ListeAnnonce selectByUser(@PathVariable int idUtilisateur)throws Exception{
         Connexion co = new Connexion();
         Connection connection = co.getConnex();
-        Annonce annonce = new Annonce();
-        AnnonceParUtilisateur a = annonce.get_annonce_by_utilisateur(connection,idUtilisateur );
+        ListeAnnonce annonce = new ListeAnnonce();
+        ListeAnnonce listeAnnonce = annonce.listeAnnonceParUtilisateur(connection,idUtilisateur);
         connection.close();
-        return a;
+        return listeAnnonce;
    }
 
-   @GetMapping("/listesAnnnonces")
-    public List<ListeAnnonce> listeAnnonce ()throws Exception{
-        Connexion co = new Connexion();
-        Connection connection = co.getConnex();
-        Annonce a = new Annonce();
-        List<ListeAnnonce> liste = a.listeAnnonce(connection);
+   @GetMapping("/selectAnnonce")
+   public List<ListeAnnonce> selectAllAnnonce()throws Exception{
+        Connexion connexion= new Connexion();
+        Connection connection =connexion.getConnex();
+        ListeAnnonce annonceDetail= new ListeAnnonce();
+        List<ListeAnnonce> listeDetails= annonceDetail.listeAnnonce(connection);
         connection.close();
-        return liste;
+        return listeDetails;
+   }
 
-    }    
+   
    @GetMapping("/recherche")
     public List<AnnonceDetail> rechercheAnnonce(@RequestParam String prixMin , @RequestParam String prixMax ,@RequestParam String idBoitedevitesse , @RequestParam String idCarburant , @RequestParam String idCategorie , @RequestParam String idLieu , @RequestParam String idMarque  , @RequestParam String idModel  ){
         return annonceDetailRepository.rechercheAnnonce(prixMin ,   prixMax ,  idBoitedevitesse ,  idCarburant ,   idCategorie ,   idLieu ,   idMarque  ,   idModel);
@@ -89,5 +90,6 @@ public class AnnonceController {
     public Annonce ChangerStatuAnnonce(@RequestParam int idAnnonce,@RequestParam int etat){
         return this.annonceService.ModificationStatuAnnonce(idAnnonce,etat);
     }
+
     
 }

@@ -12,25 +12,6 @@ public class AnnonceDetail {
     int  IdCouleur ;
     String  Couleur; 
     int  IdCreateur ; 
-    public AnnonceDetail(int idAnnonce, String description, Timestamp dateHeureAnnonce, int idVoiture,
-            String imatricule, int idCouleur, String couleur, int idCreateur, String nomCreateur, int idLieu,
-            String nomLieu, String annee, double prix, double pourcentageAlaina, int etatAnnonce) {
-        IdAnnonce = idAnnonce;
-        Description = description;
-        DateHeureAnnonce = dateHeureAnnonce;
-        IdVoiture = idVoiture;
-        Imatricule = imatricule;
-        IdCouleur = idCouleur;
-        Couleur = couleur;
-        IdCreateur = idCreateur;
-        NomCreateur = nomCreateur;
-        IdLieu = idLieu;
-        NomLieu = nomLieu;
-        Annee = annee;
-        Prix = prix;
-        PourcentageAlaina = pourcentageAlaina;
-        EtatAnnonce = etatAnnonce;
-    }
     String NomCreateur ;
     int IdLieu ;
     String NomLieu;
