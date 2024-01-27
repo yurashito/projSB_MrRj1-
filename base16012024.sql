@@ -253,3 +253,14 @@ select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricul
 --  Manampy etat amin'ny favorie 
 -- ALTER TABLE favorie
 -- ADD COLUMN etat integer NOT NULL DEFAULT 1;
+
+
+CREATE VIEW venteParMois AS (
+    SELECT 
+        EXTRACT(MONTH FROM v.dateheurevente) AS mois_chiffre,
+        TO_CHAR(v.dateheurevente, 'Month') AS mois_lettre,
+        COUNT(*) AS nombreVentes
+    FROM historiquevente v
+    GROUP BY mois_chiffre, mois_lettre
+    ORDER BY mois_chiffre
+);
