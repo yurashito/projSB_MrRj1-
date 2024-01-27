@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.voiture.voiture.connex.Connexion;
 import com.voiture.voiture.modele.Annonce;
 import com.voiture.voiture.modele.AnnonceDetail;
-import com.voiture.voiture.modele.AnnonceParUtilisateur;
 import com.voiture.voiture.modele.ListeAnnonce;
 import com.voiture.voiture.repository.AnnonceDetailRepository;
 import com.voiture.voiture.repository.AnnonceRepository;
@@ -91,7 +90,7 @@ public class AnnonceController {
         return this.annonceService.ModificationStatuAnnonce(idAnnonce,etat);
     }
 
-    @PostMapping("/listeAnnonceAModifier")
+    @GetMapping("/listeAnnonceAModifier")
     public List<ListeAnnonce> listeAnnonceAValider() throws Exception{
         ListeAnnonce annonceDetail= new ListeAnnonce();
         List<ListeAnnonce> listeDetails= annonceDetail.listeAnnonceAValider(null);
