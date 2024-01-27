@@ -227,7 +227,7 @@ create table commentaire(
 create or replace view V_Annonce as(
     select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricule , annonce.idCouleur as idCouleur , couleur.nomCouleur as couleur, 
     annonce.idCreateur as idCreateur , utilisateur.nomUtilisateur as nomCreateur , lieu.idLieu as idLieu , lieu.nomLieu as nomLieu,
-    Annee,Prix , PourcentageAlaina EtatAnnonce 
+    Annee,Prix , PourcentageAlaina , EtatAnnonce 
     from annonce
     join utilisateur
     on utilisateur.idUtilisateur = annonce.idCreateur

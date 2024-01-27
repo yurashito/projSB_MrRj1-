@@ -91,5 +91,12 @@ public class AnnonceController {
         return this.annonceService.ModificationStatuAnnonce(idAnnonce,etat);
     }
 
+    @PostMapping("/listeAnnonceAModifier")
+    public List<ListeAnnonce> listeAnnonceAValider() throws Exception{
+        ListeAnnonce annonceDetail= new ListeAnnonce();
+        List<ListeAnnonce> listeDetails= annonceDetail.listeAnnonceAValider(null);
+        return listeDetails;
+    }
+
     
 }
