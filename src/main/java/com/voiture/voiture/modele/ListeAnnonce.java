@@ -9,7 +9,6 @@ import java.util.*;
 import com.voiture.voiture.connex.Connexion;
 
 public class ListeAnnonce {
-    
     int IdAnnonce;
     String Description;
     Timestamp  DateHeureAnnonce ;
