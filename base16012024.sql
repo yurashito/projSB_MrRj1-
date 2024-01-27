@@ -238,9 +238,9 @@ create or replace view V_Annonce as(
 );
 
 CREATE or REPLACE view V_Annonce_Favorie AS
-select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricule , annonce.idCouleur as idCouleur , couleur.nomCouleur as couleur, 
+select annonce.idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricule , annonce.idCouleur as idCouleur , couleur.nomCouleur as couleur, 
     annonce.idCreateur as idCreateur , utilisateur.nomUtilisateur as nomCreateur , lieu.idLieu as idLieu , lieu.nomLieu as nomLieu,
-    Annee,Prix , PourcentageAlaina EtatAnnonce 
+    Annee,Prix , PourcentageAlaina EtatAnnonce, favorie.idfavorie
     from annonce
     join utilisateur
     on utilisateur.idUtilisateur = annonce.idCreateur
@@ -248,6 +248,8 @@ select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricul
     on lieu.idLieu = annonce.idLieu
     join couleur
     on couleur.idCouleur = annonce.idCouleur
+    join favorie on annonce.idannonce= favorie.idannonce;
+
 
 
 --  Manampy etat amin'ny favorie 
