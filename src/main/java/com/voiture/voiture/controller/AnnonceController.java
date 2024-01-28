@@ -74,7 +74,6 @@ public class AnnonceController {
         connection.close();
         return listeDetails;
    }
-
    
    @GetMapping("/recherche")
     public List<AnnonceDetail> rechercheAnnonce(@RequestParam String prixMin , @RequestParam String prixMax ,@RequestParam String idBoitedevitesse , @RequestParam String idCarburant , @RequestParam String idCategorie , @RequestParam String idLieu , @RequestParam String idMarque  , @RequestParam String idModel  ){
@@ -89,6 +88,13 @@ public class AnnonceController {
     @PostMapping("/modificationStatuAnnonce")
     public Annonce ChangerStatuAnnonce(@RequestParam int idAnnonce,@RequestParam int etat){
         return this.annonceService.ModificationStatuAnnonce(idAnnonce,etat);
+    }
+
+    @GetMapping("/listeAnnonceAModifier")
+    public List<ListeAnnonce> listeAnnonceAValider() throws Exception{
+        ListeAnnonce annonceDetail= new ListeAnnonce();
+        List<ListeAnnonce> listeDetails= annonceDetail.listeAnnonceAValider(null);
+        return listeDetails;
     }
 
     
