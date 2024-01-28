@@ -227,7 +227,7 @@ create table commentaire(
 create or replace view V_Annonce as(
     select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricule , annonce.idCouleur as idCouleur , couleur.nomCouleur as couleur, 
     annonce.idCreateur as idCreateur , utilisateur.nomUtilisateur as nomCreateur , lieu.idLieu as idLieu , lieu.nomLieu as nomLieu,
-    Annee,Prix , PourcentageAlaina EtatAnnonce 
+    Annee,Prix , PourcentageAlaina , EtatAnnonce 
     from annonce
     join utilisateur
     on utilisateur.idUtilisateur = annonce.idCreateur
@@ -238,9 +238,9 @@ create or replace view V_Annonce as(
 );
 
 CREATE or REPLACE view V_Annonce_Favorie AS
-select annonce.idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricule , annonce.idCouleur as idCouleur , couleur.nomCouleur as couleur, 
+select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricule , annonce.idCouleur as idCouleur , couleur.nomCouleur as couleur, 
     annonce.idCreateur as idCreateur , utilisateur.nomUtilisateur as nomCreateur , lieu.idLieu as idLieu , lieu.nomLieu as nomLieu,
-    Annee,Prix , PourcentageAlaina EtatAnnonce, favorie.idfavorie
+    Annee,Prix , PourcentageAlaina EtatAnnonce 
     from annonce
     join utilisateur
     on utilisateur.idUtilisateur = annonce.idCreateur
@@ -248,10 +248,19 @@ select annonce.idAnnonce,description,dateheureannonce ,  annonce.imatricule as i
     on lieu.idLieu = annonce.idLieu
     join couleur
     on couleur.idCouleur = annonce.idCouleur
-    join favorie on annonce.idannonce= favorie.idannonce;
-
 
 
 --  Manampy etat amin'ny favorie 
 -- ALTER TABLE favorie
 -- ADD COLUMN etat integer NOT NULL DEFAULT 1;
+
+
+CREATE VIEW venteParMois AS (
+    SELECT 
+        EXTRACT(MONTH FROM v.dateheurevente) AS mois_chiffre,
+        TO_CHAR(v.dateheurevente, 'Month') AS mois_lettre,
+        COUNT(*) AS nombreVentes
+    FROM historiquevente v
+    GROUP BY mois_chiffre, mois_lettre
+    ORDER BY mois_chiffre
+);

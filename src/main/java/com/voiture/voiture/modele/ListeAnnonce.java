@@ -1,7 +1,6 @@
 package com.voiture.voiture.modele;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -9,6 +8,7 @@ import java.util.*;
 import com.voiture.voiture.connex.Connexion;
 
 public class ListeAnnonce {
+    
     int IdAnnonce;
     String Description;
     Timestamp  DateHeureAnnonce ;
@@ -127,7 +127,7 @@ public class ListeAnnonce {
         if(connexion == null || connexion.isClosed()){
             connexion = Connexion.getConnex();
         }
-     try(PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+        try(PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
              while (resultSet.next()) {
@@ -194,4 +194,42 @@ public ListeAnnonce listeAnnonceParUtilisateur(Connection connexion, int idUtili
         }
         return null; 
     }
+
+    public List<ListeAnnonce> listeAnnonceAValider (Connection connexion) throws Exception{
+
+        String sql="SELECT * FROM V_Annonce where etatAnnonce = 0";        
+        List<ListeAnnonce> listeAnnonces = new ArrayList<>();
+
+        if(connexion == null || connexion.isClosed()){
+            connexion = Connexion.getConnex();
+        }
+        try(PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+             while (resultSet.next()) {
+                int idAnnonce = resultSet.getInt("idAnnonce");
+                String description = resultSet.getString("description");
+                Timestamp dateHeure = resultSet.getTimestamp("dateheureannonce");
+                String imatricule = resultSet.getString("imatricule");
+                String couleur = resultSet.getString("couleur");
+                String nomCreateur = resultSet.getString("nomCreateur");
+                String nomLieu= resultSet.getString("nomLieu");
+                int annee = resultSet.getInt("annee") ;
+                double prix = resultSet.getDouble("prix");
+                int etatAnnonce = resultSet.getInt("etatAnnonce");
+ 
+                ListeAnnonce annonce = new ListeAnnonce(idAnnonce,description,dateHeure,imatricule,couleur,nomCreateur,nomLieu,annee,prix,etatAnnonce);
+                
+                listeAnnonces.add(annonce);
+            }   
+            
+    } 
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return listeAnnonces;       
+
+    }
+}
 }
