@@ -7,7 +7,6 @@ public class AnnonceDetail {
     int IdAnnonce;
     String Description;
     Timestamp  DateHeureAnnonce ;
-    int IdVoiture ; 
     String Imatricule ;
     int  IdCouleur ;
     String  Couleur; 
@@ -31,15 +30,6 @@ public class AnnonceDetail {
     }
     public void setDescription(String description) {
         Description = description;
-    }
- 
-    
-
-    public int getIdVoiture() {
-        return IdVoiture;
-    }
-    public void setIdVoiture(int idVoiture) {
-        IdVoiture = idVoiture;
     }
     public String getImatricule() {
         return Imatricule;
