@@ -35,7 +35,7 @@ public class FavorieController {
          this.favorieService.deleteFavorie(idFavorie);
     }
     @PostMapping("/mettreFavorie/{idAnnonce}")
-    public Favorie mettreFavorie(@PathVariable int idAnnonce,@RequestParam int idUtilisateur){
+    public Favorie mettreFavorie(@RequestParam int idAnnonce,int idUtilisateur){
         return favorieService.mettreFavorie(idAnnonce,idUtilisateur);
     }
 }
