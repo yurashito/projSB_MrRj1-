@@ -7,5 +7,5 @@ public interface FavorieService {
     Favorie CreerFavorie(Favorie favorie);
     List<Favorie> select();
     Favorie deleteFavorie(int idFavorie);
-    Favorie mettreFavorie(int idAnnonce,int idUtilisateur);
+    Favorie mettreFavorie(int idAnnonce,in);
 }

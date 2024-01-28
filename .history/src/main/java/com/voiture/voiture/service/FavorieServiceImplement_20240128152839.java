@@ -39,11 +39,11 @@ public class FavorieServiceImplement implements FavorieService  {
             }
         ).orElseThrow(() -> new RuntimeException("favorie pas trouver"));
     }
-    public Favorie mettreFavorie(int idAnnonce,int idUtilisateur){
-        Favorie favorie = new Favorie();
-        favorie.setIdannonce(idAnnonce);
-        favorie.setIdutilisateur(idUtilisateur);
-        favorie.setEtat(1); 
-        return favorieRepository.save(favorie);
+    public Favorie mettreFavorie(int idAnnonce,int ){
+        return this.favorieRepository.findById(idAnnonce).map(
+            favorie -> {
+                return favorieRepository.save(favorie);
+            }
+        ).orElseThrow(() -> new RuntimeException("echec mettre favorie"));
     }
 }
