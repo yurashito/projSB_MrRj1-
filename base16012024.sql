@@ -192,6 +192,17 @@ create table historiqueVente(
     foreign key(idClient) references utilisateur(idUtilisateur)
 );
 
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-01-02 12:00' , 1 , 1);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-01-02 11:00' , 2 , 1);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-02-20 09:00' , 1 , 2);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-03-20 17:00' , 1 , 3);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-03-02 15:00' , 3 , 3);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-03-10 15:00' , 3 , 1);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-03-10 11:00' , 1 , 1);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-03-11 11:00' , 1 , 1);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-03-20 10:00' , 1 , 1);
+insert into historiqueVente(dateHeureVente,idAnnonce,idClient) values('2023-07-10 11:00' , 1 , 2);
+
 create table notification(
     idNotification serial not null primary key,
     dateHeureNotification timestamp,
