@@ -2,8 +2,11 @@ package com.voiture.voiture.controller;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.voiture.voiture.connex.Connexion;
 import com.voiture.voiture.modele.Annonce;
@@ -22,6 +27,9 @@ import com.voiture.voiture.repository.AnnonceDetailRepository;
 import com.voiture.voiture.repository.AnnonceRepository;
 import com.voiture.voiture.service.*;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/annonces")
@@ -29,11 +37,15 @@ public class AnnonceController {
     private final AnnonceService  annonceService;
     private final AnnonceDetailRepository annonceDetailRepository;
     private final AnnonceRepository annonceRepository;
+    private final AnnonceDetailService annonceDetailService;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public AnnonceController( AnnonceService annonceService , AnnonceDetailRepository annonceDetailRepository,AnnonceRepository annonceRepository){
+    public AnnonceController( AnnonceService annonceService , AnnonceDetailRepository annonceDetailRepository , AnnonceDetailService annonceDetailService , JwtTokenUtil jwtTokenUtil , AnnonceRepository annonceRepository){
         this.annonceService= annonceService;
         this.annonceDetailRepository= annonceDetailRepository;
+        this.annonceDetailService= annonceDetailService;
+        this.jwtTokenUtil= jwtTokenUtil;
         this.annonceRepository= annonceRepository;
     }
     @GetMapping
@@ -41,10 +53,54 @@ public class AnnonceController {
         return this.annonceService.select();
     }
 
-    @PostMapping("/create")
-    public Annonce create(@RequestBody Annonce annonce){
-        return annonceService.Creer(annonce) ;
+    // @PostMapping("/create")
+    // public Annonce create(@RequestBody Annonce annonce){
+    //     return annonceService.Creer(annonce) ;
+    // }
+
+    @PostMapping("/creerAnnonce")
+    public ResponseEntity<Object> obtenirUtilisateursParNomEtMotDePasse(javax.servlet.http.HttpServletRequest request,@RequestPart("annonce") Annonce annonce , @RequestPart("files") List<MultipartFile> listeFile) {    
+        String authorizationHeader = request.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String bearerToken = authorizationHeader.substring(7); // Supprimer "Bearer " du début
+                try{
+                    if(jwtTokenUtil.isTokenValid(bearerToken)){
+                        Jws<Claims> claims = jwtTokenUtil.decomposeLeToken(bearerToken);
+                        System.out.println("le idUtilisateur est : "+Integer.parseInt(claims.getBody().getSubject()));
+                        String idUtilisateur = claims.getBody().getSubject();
+                        annonce.setIdCreateur(Integer.parseInt(idUtilisateur));
+                        annonceDetailService.insertionAnnonceAvecPhoto( annonce , listeFile);
+                        return ResponseEntity.ok("l'annonce est belle et bien enregistre");
+                    }else{
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                            Map.of(
+                                "status", HttpStatus.BAD_REQUEST.value(),
+                                "message", "Une erreur s'est produite : le token n'est plus valide",
+                                "timestamp", System.currentTimeMillis()
+                            )
+                        );
+                    } 
+                }catch(Exception e){
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        Map.of(
+                            "status", HttpStatus.BAD_REQUEST.value(),
+                            "message", e,
+                            "timestamp", System.currentTimeMillis()
+                        )
+                    );
+                }
+            } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of(
+                    "status", HttpStatus.BAD_REQUEST.value(),
+                    "message", "Une erreur s'est produite : le token n'est plus valide",
+                    "timestamp", System.currentTimeMillis()
+                )
+            );
+        }
     }
+
+
     @PostMapping("/deleteAnnonce/{idannonce}")
     public void deleteAnnonce(@PathVariable int idannonce){
         this.annonceService.deleteAnnonce(idannonce);

@@ -1,9 +1,9 @@
 package com.voiture.voiture.modele;
 
 import javax.persistence.Entity;
-
+import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -13,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.*;
+
 import com.voiture.voiture.connex.Connexion;
 
 @Entity
@@ -23,8 +23,8 @@ public class Annonce {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idannonce")
     int Annonce;
-
-    @Column(name="dateheureannonce")
+    
+    @Column(name="dateheureannonce" , columnDefinition = "timestamp DEFAULT now()")
     Timestamp DateHeureAnnonce ;
 
     @Column(name="description")
@@ -46,7 +46,7 @@ public class Annonce {
     int IdModel ;
 
     @Column(name="idboitedevitesse")
-    int IdBoitedevitesse ;
+    int IdBoiteDeVitesse ;
 
     @Column(name="idcouleur")
     int IdCouleur ;
@@ -68,6 +68,9 @@ public class Annonce {
 
     @Column(name="etatannonce")
     int EtatAnnonce ;
+
+   
+
 
     public int getAnnonce() {
         return Annonce;
@@ -133,12 +136,12 @@ public class Annonce {
         IdModel = idModel;
     }
 
-    public int getIdBoitedevitesse() {
-        return IdBoitedevitesse;
+    public int getIdBoiteDeVitesse() {
+        return IdBoiteDeVitesse;
     }
 
-    public void setIdBoitedevitesse(int idBoitedevitesse) {
-        IdBoitedevitesse = idBoitedevitesse;
+    public void setIdBoiteDeVitesse(int idBoiteDeVitesse) {
+        IdBoiteDeVitesse = idBoiteDeVitesse;
     }
 
     public int getIdCouleur() {
@@ -196,7 +199,7 @@ public class Annonce {
     public void setEtatAnnonce(int etatAnnonce) {
         EtatAnnonce = etatAnnonce;
     }
-    // Annonce annonceFavorie = new Annonce(date, nom, voiture, imatricule,couleur,utilisateur, nomLieu,annee,prix,etatAnnonce );
+
     public Annonce(int annonce, Timestamp dateHeureAnnonce, String description, String imatricule, int idCategorie,
             int idMarque, int idCarburant, int idModel, int idBoitedevitesse, int idCouleur, int idCreateur, int idLieu,
             double annee, double prix, double pourcentageAlaina, int etatAnnonce) {
@@ -208,7 +211,7 @@ public class Annonce {
         IdMarque = idMarque;
         IdCarburant = idCarburant;
         IdModel = idModel;
-        IdBoitedevitesse = idBoitedevitesse;
+        IdBoiteDeVitesse = idBoitedevitesse;
         IdCouleur = idCouleur;
         IdCreateur = idCreateur;
         IdLieu = idLieu;
@@ -218,7 +221,43 @@ public class Annonce {
         EtatAnnonce = etatAnnonce;
     }
 
+    public AnnonceParUtilisateur get_annonce_by_utilisateur(Connection connexion, int idUtilisateur) throws Exception{
+        
+        if(connexion == null || connexion.isClosed()){
+            connexion = Connexion.getConnex();
+         }
+        Utilisateur utilisateur = new Utilisateur();
+        idUtilisateur = utilisateur.getIdUtilisateur();
+        String sql = "SELECT * FROM view_annoncePar_utilisateur WHERE idutilisateur = ?";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+                
+                preparedStatement.setInt(1, idUtilisateur);
+                
+                
+                ResultSet resultSet = preparedStatement.executeQuery();
+                
+                if(resultSet.next()) {
+                    int id = resultSet.getInt("idutilisateur");
+                    String nomUtilisateur= resultSet.getString("nomutilisateur");
+                    String dateHeurAnnonce = resultSet.getString("dateheureannonce");
+                    String description = resultSet.getString("description");
+
+                    AnnonceParUtilisateur parUtilisateur = new AnnonceParUtilisateur(id,nomUtilisateur,dateHeurAnnonce,description);
+                    return parUtilisateur;      
+                }
+                
+                
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            connexion.close();
+        }
+        return null; 
+    }
+
+
+
     public Annonce() {}
 
-    
+
 }

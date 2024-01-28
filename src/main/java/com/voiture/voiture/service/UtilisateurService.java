@@ -35,10 +35,19 @@ public class UtilisateurService {
             }
         ).orElseThrow(() -> new RuntimeException("Utilisateur pas trouver"));
     }
-    public boolean verifUtilisateur(String nom , String mdp){
-        if(UtilisateurRepository.verifierUtilisateur(nom, mdp)!=null){
-            return true;
+    // public boolean verifUtilisateur(String nom , String mdp){
+    //     if(UtilisateurRepository.verifierUtilisateur(nom, mdp)!=null){
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+    public Utilisateur verifUtilisateur(String nom , String mdp){
+        Utilisateur utilisateur = UtilisateurRepository.verifierUtilisateur(nom, mdp);
+        System.out.println("nom utilisateur :   "+utilisateur.getNomUtilisateur());
+        if(utilisateur!=null){
+            return utilisateur ;
         }
-        return false;
+        return utilisateur;
     }
 }
