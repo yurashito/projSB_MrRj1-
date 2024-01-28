@@ -50,7 +50,7 @@ public class UtilisateurController {
     public ResponseEntity<Object> obtenirUtilisateursParNomEtMotDePasse(@RequestBody Utilisateur utilisateur) {
          
          boolean conditionErreur = UtilisateurService.verifUtilisateur(utilisateur.getNomUtilisateur(),utilisateur.getMdp() );;
-
+            System.out.println(utilisateur.getNomUtilisateur()+","+utilisateur.getMdp() );
          if (conditionErreur==false) {
              // Renvoyer une réponse d'erreur avec un objet JSON détaillé directement
              return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
