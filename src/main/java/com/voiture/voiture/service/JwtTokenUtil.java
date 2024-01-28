@@ -18,7 +18,7 @@ import java.util.*;
 @Service
 public class JwtTokenUtil {
 
-    private static final long DureeExpiration = 40000;
+    private static final long DureeExpiration = 400000000;
     private  String SECRET_KEY = "53857461b5aed814690f37dbd1c689c669e02b519fe61920459334137519f076";
 
     public void setSecret_Key(String secret){
@@ -46,11 +46,13 @@ public class JwtTokenUtil {
     }
 
     public String generateToken(Utilisateur Utilisateur) {
+        
         Key key1 = new SecretKeySpec(this.SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
         Date now = new Date();
         Date dateExpiration = new Date(now.getTime()+DureeExpiration);
         String idUtilisateur= String.valueOf(Utilisateur.getIdUtilisateur());
         String identifiant = String.valueOf(Utilisateur.getIdentifiant());
+        System.out.println("idUtilisateur : "+idUtilisateur+" identifiant "+ identifiant);
         return Jwts.builder()
                 .setSubject(idUtilisateur)
                 .claim("identifiant", identifiant)
@@ -58,6 +60,15 @@ public class JwtTokenUtil {
                 .setExpiration(dateExpiration)
                 .signWith(key1)
                 .compact();
+    }
+
+    public Jws<Claims> decomposeLeToken(String token){
+        Key key1 = new SecretKeySpec(SECRET_KEY.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+        Jws<Claims> claims = Jwts.parserBuilder()
+                .setSigningKey(key1)
+                .build()
+                .parseClaimsJws(token);
+        return claims;
     }
 
 

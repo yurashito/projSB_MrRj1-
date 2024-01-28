@@ -47,24 +47,19 @@ public class UtilisateurController {
 
     
     @PostMapping("/verifierUser")
-    public ResponseEntity<Object> obtenirUtilisateursParNomEtMotDePasse(@RequestBody Utilisateur utilisateur) {
-         
-         boolean conditionErreur = UtilisateurService.verifUtilisateur(utilisateur.getNomUtilisateur(),utilisateur.getMdp() );;
-
-         if (conditionErreur==false) {
-             // Renvoyer une réponse d'erreur avec un objet JSON détaillé directement
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+    public ResponseEntity<Object> obtenirUtilisateursParNomEtMotDePasse(@RequestBody Utilisateur utilisateur) {    
+        Utilisateur conditionErreur = UtilisateurService.verifUtilisateur(utilisateur.getNomUtilisateur(),utilisateur.getMdp() );;
+        if (conditionErreur==null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                  Map.of(
-                     "status", HttpStatus.BAD_REQUEST.value(),
-                     "message", "Une erreur s'est produite : token non trouver",
-                     "timestamp", System.currentTimeMillis()
-                 )
-             );
-         } else {
-             String token = JwtTokenUtil.generateToken(utilisateur);
-            //  String token = JwtTokenUtil.generateToken(utilisateur);
-             return ResponseEntity.ok(token);
-         }
-
+                    "status", HttpStatus.BAD_REQUEST.value(),
+                    "message", "Une erreur s'est produite : token non trouver",
+                    "timestamp", System.currentTimeMillis()
+                )
+            );
+        } else {
+            String token = JwtTokenUtil.generateToken(conditionErreur);
+            return ResponseEntity.ok(token);
+        }
     }
 }
