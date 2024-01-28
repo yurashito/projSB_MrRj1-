@@ -26,7 +26,6 @@ public class AnnonceDetailRepository {
         annonce.setIdAnnonce(resultSet.getInt("idAnnonce"));
         annonce.setDescription(resultSet.getString("description"));
         annonce.setDateHeureAnnonce(resultSet.getTimestamp("dateHeureAnnonce"));
-        annonce.setIdVoiture(resultSet.getInt("idVoiture"));        
         annonce.setImatricule(resultSet.getString("iMatricule"));
         annonce.setIdCouleur(resultSet.getInt("idCouleur"));
         annonce.setCouleur(resultSet.getString("couleur"));
