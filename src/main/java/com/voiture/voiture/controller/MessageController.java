@@ -120,8 +120,10 @@ public class MessageController {
         }
     }
 
-
-
+    @PostMapping("/MessageDUnePersonne/{idSend}/{idReceive}")
+    public List<Message> MessageParPersonne(int idSend,int idReceive) {
+        return messageService.MessageParPersonne(idSend,idReceive);
+    }
 }
 
 
