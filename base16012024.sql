@@ -124,6 +124,7 @@ insert into couleur(nomCouleur) values('noir');
 insert into couleur(nomCouleur) values('blanc');
 insert into couleur(nomCouleur) values('vert');
 insert into couleur(nomCouleur) values('bleu');
+insert into couleur(nomCouleur) values('gris');
 
 
 create table annonce(
@@ -154,14 +155,14 @@ create table annonce(
 );
 
 insert into annonce(description,imatricule,idCategorie,idMarque,idCarburant,idModel,idBoiteDeVitesse,idcouleur,idCreateur,idLieu,Annee,Prix,PourcentageAlaina) values
-    ('Une voiture de couleur rouge 4 portes idéale pour une famille' , 'TAA0011',1,1,3,1,1,3 , 1, 1, 2024 , 4000000 ,20);
+    ('Une voiture de couleur rouge 4 portes idéale pour une famille' , 'TAA0011',1,1,3,1,1,1 , 1, 1, 2024 , 4000000 ,20);
 
 insert into annonce(description,imatricule,idCategorie,idMarque,idCarburant,idModel,idBoiteDeVitesse,idcouleur,idCreateur,idLieu,Annee,Prix,PourcentageAlaina) values
-    ('Une voiture de couleur blanc 3 portes' , 'TAB0201',2,3,2,1,1,1 , 2, 4, 2020 , 3500000 ,20);
+    ('Une voiture de couleur vert 4 portes' , 'TAB0201',2,3,2,1,1,4 , 2, 4, 2020 , 3500000 ,20);
 
 
 insert into annonce(description,imatricule,idCategorie,idMarque,idCarburant,idModel,idBoiteDeVitesse,idcouleur,idCreateur,idLieu,Annee,Prix,PourcentageAlaina) values
-    ('Une voiture de couleur blanc 3 portes' , 'TAM1001',8,8,1,2,2,4 , 3, 2, 2010 , 3000000 ,20);
+    ('Une voiture de couleur Gris 5 portes' , 'TAM1001',8,8,1,2,2,6 , 3, 2, 2010 , 3000000 ,20);
 
 create table photoVoiture(
     idPhotoVoiture serial not null primary key,
@@ -169,6 +170,17 @@ create table photoVoiture(
     nomPhoto varchar(150),
     foreign key(idAnnonce) references annonce(idAnnonce)
 );
+
+insert into photoVoiture(idAnnonce,nomPhoto) values(1,'https://i.ibb.co/pW82ysF/Voiture-Rouge-Et-Blanc1.jpg');
+insert into photoVoiture(idAnnonce,nomPhoto) values(1,'https://i.ibb.co/K2dkB5W/Voiture-Rouge-Et-Blanc2.jpg');
+insert into photoVoiture(idAnnonce,nomPhoto) values(1,'https://i.ibb.co/wN45V3g/Voiture-Rouge-Et-Blanc3.jpg');
+
+insert into photoVoiture(idAnnonce,nomPhoto) values(2,'https://i.ibb.co/9qdKp6r/Voiture-Vert1.jpg');
+insert into photoVoiture(idAnnonce,nomPhoto) values(2,'https://i.ibb.co/G3YLfnc/Voiture-Vert2.jpg');
+
+insert into photoVoiture(idAnnonce,nomPhoto) values(3,'https://i.ibb.co/hmJhSxg/Voiture-Gris1.jpg');
+insert into photoVoiture(idAnnonce,nomPhoto) values(3,'https://i.ibb.co/64cGHtZ/Voiture-Gris2.jpg');
+insert into photoVoiture(idAnnonce,nomPhoto) values(3,'https://i.ibb.co/1zQQqFh/Voiture-Gris3.jpg');
 
 create table favorie(
     idFavorie serial not null primary key,
@@ -259,11 +271,6 @@ select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricul
     on lieu.idLieu = annonce.idLieu
     join couleur
     on couleur.idCouleur = annonce.idCouleur
-
-
---  Manampy etat amin'ny favorie 
--- ALTER TABLE favorie
--- ADD COLUMN etat integer NOT NULL DEFAULT 1;
 
 
 CREATE VIEW venteParMois AS (
