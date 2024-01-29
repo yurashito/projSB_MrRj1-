@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.voiture.voiture.modele.Message;
@@ -78,7 +79,7 @@ public class MessageController {
     }
 
 
-    @GetMapping("/MessageParUtilisateur/{idPersonne}")
+    @GetMapping("/MessageParUtilisateur11/{idPersonne}")
     public List<Message> MessageParUtilisateur(@PathVariable int idPersonne) {
         return messageService.MessageParUtilisateur(idPersonne);
     }
@@ -120,9 +121,43 @@ public class MessageController {
         }
     }
 
-    @GetMapping("/MessageDUnePersonne/{idSend}/{idReceive}")
-    public List<Message> MessageParPersonne(int idSend,int idReceive) {
-        return messageService.MessageParPersonne(idSend,idReceive);
+    // @GetMapping("/MessageDUnePersonne/{idSend}/{idReceive}")
+    // public List<Message> MessageParPersonne1(@PathVariable int idSend,@PathVariable int idReceive) {
+    //     return messageService.MessageParPersonne(idSend,idReceive);
+    // }
+
+    @GetMapping("/MessageDUnePersonne")
+    public ResponseEntity<Object> MessageParPersonne(javax.servlet.http.HttpServletRequest request , @RequestParam int idReceive) {
+        String authorizationHeader = request.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String bearerToken = authorizationHeader.substring(7); // Supprimer "Bearer " du début
+                
+                    if(jwtTokenUtil.isTokenValid(bearerToken)){
+                        Jws<Claims> claims = jwtTokenUtil.decomposeLeToken(bearerToken);
+                        System.out.println("le idUtilisateur est : "+Integer.parseInt(claims.getBody().getSubject()));
+                        String idUtilisateur = claims.getBody().getSubject();
+                        int idPersonne= Integer.parseInt(idUtilisateur);
+                        return ResponseEntity.ok(messageService.MessageParPersonne(idPersonne , idReceive ));
+                    }else{
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                            Map.of(
+                                "status", HttpStatus.BAD_REQUEST.value(),
+                                "message", "Une erreur s'est produite : le token n'est plus valide",
+                                "timestamp", System.currentTimeMillis()
+                            )
+                        );
+                    } 
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of(
+                    "status", HttpStatus.BAD_REQUEST.value(),
+                    "message", "Une erreur s'est produite : vous n'avez pas l'authorisation desole",
+                    "timestamp", System.currentTimeMillis()
+                )
+            );
+        }
+
+        // return messageService.MessageParPersonne(idSend,idReceive);
     }
 }
 
