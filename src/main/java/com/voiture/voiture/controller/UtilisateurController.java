@@ -36,8 +36,19 @@ public class UtilisateurController {
     }
 
     @PostMapping("/create")
-    public Utilisateur create(@RequestBody Utilisateur favorie){
-        return UtilisateurService.Creer(favorie) ;
+    public ResponseEntity<Object> create(@RequestBody Utilisateur favorie){
+        Utilisateur utilisateur = UtilisateurService.Creer(favorie);
+        if (utilisateur==null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                 Map.of(
+                    "status", HttpStatus.BAD_REQUEST.value(),
+                    "message", "Une erreur s'est produite : token non trouver",
+                    "timestamp", System.currentTimeMillis()
+                )
+            );
+        } 
+        String token = JwtTokenUtil.generateToken(utilisateur);
+        return ResponseEntity.ok(token);
     }
 
      @PostMapping("/updateUtilisateur/{idUtilisateur}")
