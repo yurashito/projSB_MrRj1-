@@ -42,6 +42,9 @@ public class AnnonceDetailService {
             Timestamp dateActu = getDateActuelle();
             annonceEnregiste.setDateHeureAnnonce(dateActu);
         }
+        if(annonceEnregiste.getPourcentageAlaina()==0){
+            annonceEnregiste.setPourcentageAlaina(20);
+        }
         for(MultipartFile file  : listePhoto   ){
             JsonNode jsonNode = objectMapper.readTree(this.ImgBBService.uploadImages(file));
             if (jsonNode.has("data")) {
