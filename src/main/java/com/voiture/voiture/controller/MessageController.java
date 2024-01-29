@@ -40,13 +40,13 @@ public class MessageController {
         return messageService.getAllDocuments();
     }
 
-    @PostMapping("/envoyerMessage")
-    public void EnvoyerMessage(@RequestBody Message mess) {
-        messageService.EnvoyerMessage(mess);
-    }
+    // @PostMapping("/envoyerMessage")
+    // public void EnvoyerMessage(@RequestBody Message mess) {
+    //     messageService.EnvoyerMessage(mess);
+    // }
 
-    @PostMapping("/envoyerMessage1")
-    public ResponseEntity<Object> EnvoyerMessage1(javax.servlet.http.HttpServletRequest request , @RequestBody Message mess) {
+    @PostMapping("/envoyerMessage")
+    public ResponseEntity<Object> EnvoyerMessage(javax.servlet.http.HttpServletRequest request , @RequestBody Message mess) {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String bearerToken = authorizationHeader.substring(7); // Supprimer "Bearer " du début
