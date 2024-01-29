@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.voiture.voiture.connex.Connexion;
 import com.voiture.voiture.modele.Annonce;
+import com.voiture.voiture.modele.AnnonceAvecPhoto;
 import com.voiture.voiture.modele.AnnonceDetail;
 import com.voiture.voiture.modele.AnnonceParUtilisateur;
 import com.voiture.voiture.modele.ListeAnnonce;
@@ -153,5 +154,14 @@ public class AnnonceController {
         return listeDetails;
     }
 
+    @GetMapping("/listeAnnoncePhoto")
+    public List<AnnonceAvecPhoto> listeAnnoncePicture()throws Exception{
+        Connexion connexion= new Connexion();
+        Connection connection =connexion.getConnex();
+        AnnonceAvecPhoto util= new AnnonceAvecPhoto();
+        List<AnnonceAvecPhoto> liste = util.listeAnnonceWithPhoto(connection);
+        connection.close();
+        return liste;
+    }
     
 }

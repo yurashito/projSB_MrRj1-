@@ -170,9 +170,53 @@ public class AnnonceAvecPhoto {
     public void setPhotoVoiture(List<PhotoVoiture> photoVoiture) {
         this.photoVoiture = photoVoiture;
     }
+
+    public void getListePhoto (Connection connection)throws Exception{
+       
+        String sql = "SELECT * FROM photovoiture WHERE idannonce=?";
+        if(connection == null || connection.isClosed()){
+            connection = Connexion.getConnex();
+        }
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1,this.getIdAnnonce());
+            this.photoVoiture = new ArrayList<>();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int idAnnonces = resultSet.getInt("idAnnonce");
+                    String nomPhotoVoiture = resultSet.getString("nomPhoto");
+                    PhotoVoiture photoVoiture1 = new PhotoVoiture(idAnnonces, nomPhotoVoiture);
+                    this.photoVoiture.add(photoVoiture1);
+                    
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
     
+        }
+        finally{
+            if(connection==null){
+                connection.close();
+            }
+        }
+    
+    }
+    
+
+    public AnnonceAvecPhoto(int idAnnonce, Timestamp dateHeure, String description, String imatricule, String nomCouleur, String nomUtilisteur, String nomLieu, int annee, double prix, int etatAnnonce) {
+        this.idAnnonce = idAnnonce;
+        this.dateHeure = dateHeure;
+        this.description = description;
+        this.imatricule = imatricule;
+        this.nomCouleur = nomCouleur;
+        this.nomUtilisteur = nomUtilisteur;
+        this.nomLieu = nomLieu;
+        this.annee = annee;
+        this.prix = prix;
+        this.etatAnnonce = etatAnnonce;
+    }
     public List<AnnonceAvecPhoto> listeAnnonceWithPhoto (Connection connection)throws Exception{
-        String sql= "SELECT * FROM V_Annonce_Avec_Photo";
+        String sql= "SELECT * FROM V_annonce";
         List<AnnonceAvecPhoto> listes = new ArrayList<>();
         
         if(connection == null || connection.isClosed()){
@@ -183,43 +227,43 @@ public class AnnonceAvecPhoto {
 
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
              while (resultSet.next()) {
-                Timestamp dateHeure = resultSet.getTimestamp("dateheure");
+                Timestamp dateHeure = resultSet.getTimestamp("dateheureannonce");
                 String description = resultSet.getString("description");
                 String imatricule = resultSet.getString("imatricule");
-                String nomCategorie = resultSet.getString("nomcategorie");
-                String nomMarque = resultSet.getString("nomMarque");
-                String nomCarburant= resultSet.getString("nomCarburant");
-                String nomModel = resultSet.getString("nomModel");
-                String nomBoiteDeVitesse= resultSet.getString("nomBoiteDeVitesse");
-                String nomCouleur= resultSet.getString("nomCouleur");
-                String nomUtilisteur = resultSet.getString("nomUtilisteur");
+                // String nomCategorie = resultSet.getString("nomcategorie");
+                // String nomMarque = resultSet.getString("nomMarque");
+                // String nomCarburant= resultSet.getString("nomCarburant");
+                // String nomModel = resultSet.getString("nomModel");
+                // String nomBoiteDeVitesse= resultSet.getString("nomBoiteDeVitesse");
+                String nomCouleur= resultSet.getString("couleur");
+                String nomUtilisteur = resultSet.getString("nomCreateur");
                 String nomLieu = resultSet.getString("nomLieu");
                 int annee = resultSet.getInt("annee") ;
                 double prix = resultSet.getDouble("prix");
-                int pourcentage = resultSet.getInt("pourcentage") ;
+                // int pourcentage = resultSet.getInt("pourcentage") ;
                 int etatAnnonce = resultSet.getInt("etatAnnonce");
                 
-                List<PhotoVoiture> lista = new ArrayList<>();
-                int idPhotoVoiture = resultSet.getInt("idPhotoVoiture");
-                int idAnnonces = resultSet.getInt("idAnnonce");
-                String nomPhotoVoiture = resultSet.getString("nomPhoto");
+                AnnonceAvecPhoto annonceWithPictures = new AnnonceAvecPhoto( idAnnonce, dateHeure, description, imatricule, nomCouleur, nomUtilisteur, nomLieu, annee,prix, etatAnnonce);
+                annonceWithPictures.getListePhoto(connection);
 
-                PhotoVoiture photoVoiture = new PhotoVoiture(idPhotoVoiture, idAnnonces, nomPhotoVoiture);
-                lista.add(photoVoiture);
-                
-                AnnonceAvecPhoto annonceWithPictures = new AnnonceAvecPhoto(dateHeure,description,imatricule,nomCategorie,nomMarque,nomCarburant,nomModel,nomBoiteDeVitesse,nomCouleur,nomUtilisteur,nomLieu,annee,prix,pourcentage,etatAnnonce,lista);
-                
                 listes.add(annonceWithPictures);
             }   
             
     } 
     catch (Exception e) {
         e.printStackTrace();
+
+    }
+    finally{
+        if(connection==null){
+            connection.close();
+        }
     }
 
     return listes;       
 
     }
+    
 }
 
     
