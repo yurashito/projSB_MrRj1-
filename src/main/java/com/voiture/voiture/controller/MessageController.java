@@ -121,7 +121,7 @@ public class MessageController {
     }
 
     @GetMapping("/MessageDUnePersonne/{idSend}/{idReceive}")
-    public List<Message> MessageParPersonne(int idSend,int idReceive) {
+    public List<Message> MessageParPersonne(@PathVariable int idSend,@PathVariable int idReceive) {
         return messageService.MessageParPersonne(idSend,idReceive);
     }
 }
