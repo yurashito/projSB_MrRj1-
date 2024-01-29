@@ -9,6 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.voiture.voiture.modele.Annonce;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -26,9 +29,19 @@ public class AnnonceDetailService {
         this.ImgBBService= ImgBBService;
     }
 
+    public Timestamp getDateActuelle(){
+        LocalDateTime dateActuelle = LocalDateTime.now();
+        Timestamp dateEnTimeStamp = Timestamp.valueOf(dateActuelle);
+        return dateEnTimeStamp;
+    }
+
     @Transactional
     public void insertionAnnonceAvecPhoto(Annonce Annonce , List<MultipartFile> listePhoto) throws Exception{
         Annonce annonceEnregiste = annonceService.Creer(Annonce);
+        if(annonceEnregiste.getDateHeureAnnonce()==null){
+            Timestamp dateActu = getDateActuelle();
+            annonceEnregiste.setDateHeureAnnonce(dateActu);
+        }
         for(MultipartFile file  : listePhoto   ){
             JsonNode jsonNode = objectMapper.readTree(this.ImgBBService.uploadImages(file));
             if (jsonNode.has("data")) {
