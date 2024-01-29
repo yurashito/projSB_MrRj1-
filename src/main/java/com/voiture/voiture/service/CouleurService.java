@@ -25,4 +25,15 @@ public class CouleurService {
         return CouleurRepository.save(Couleur);
     }
 
+    public Couleur update(int idCouleur,Couleur modifier){
+        return this.CouleurRepository.findById(idCouleur).map(
+            couleur ->{
+                // categorie.setIdCategorie(modifier.getIdCategorie());
+                couleur.setNomCouleur(modifier.getNomCouleur());
+                
+                return CouleurRepository.save(couleur);
+            }
+        ).orElseThrow(() -> new RuntimeException("couleur pas trouver"));
+    }
+
 }

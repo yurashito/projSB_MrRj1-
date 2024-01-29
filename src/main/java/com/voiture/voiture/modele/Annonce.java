@@ -228,7 +228,7 @@ public class Annonce {
          }
         Utilisateur utilisateur = new Utilisateur();
         idUtilisateur = utilisateur.getIdUtilisateur();
-        String sql = "SELECT * FROM view_annoncePar_utilisateur WHERE idutilisateur = ?";
+        String sql = "SELECT * FROM V_Annonce WHERE idCreateur = ?";
         try (PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
                 
                 preparedStatement.setInt(1, idUtilisateur);

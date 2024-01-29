@@ -34,5 +34,8 @@ public class CouleurController {
         return CouleurService.Creer(favorie) ;
         
     }
-
+    @PostMapping("/updateCouleur/{idCouleur}")
+    public Couleur updateCouleur (@PathVariable int idCouleur, @RequestBody Couleur modifier){
+        return this.CouleurService.update(idCouleur, modifier);
+    }
 }

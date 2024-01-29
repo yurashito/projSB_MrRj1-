@@ -275,3 +275,34 @@ CREATE VIEW venteParMois AS (
     GROUP BY mois_chiffre, mois_lettre
     ORDER BY mois_chiffre
 );
+
+CREATE or REPLACE VIEW V_Annonce_Avec_Photo as 
+    SELECT annonce.idAnnonce,
+    annonce.dateheureannonce as dateheure ,
+    annonce.description ,
+    annonce.imatricule ,
+    categorie.nomCategorie,
+    marque.nomMarque,
+    carburant.nomCarburant,
+    model.nomModel,
+    boiteDeVitesse.nomBoiteDeVitesse,
+    couleur.nomCouleur,
+    utilisateur.nomutilisateur,
+    lieu.nomLieu,
+    annonce.annee,
+    annonce.prix,
+    annonce.pourcentagealaina as pourcentage,
+    annonce.etatAnnonce ,
+    photovoiture.nomPhoto as photo
+ from photovoiture
+JOIN Annonce on photovoiture.idAnnonce= annonce.idannonce 
+JOIN categorie on annonce.idCategorie = categorie.idCategorie
+JOIN marque on annonce.idMarque = marque.idMarque
+join carburant on annonce.idCarburant = carburant.idCarburant
+JOIN model on annonce.idModel = model.idModel
+JOIN boiteDeVitesse on annonce.idBoiteDeVitesse = boiteDeVitesse.idBoiteDeVitesse
+JOIN couleur on annonce.idCouleur = couleur.idCouleur
+JOIN utilisateur on annonce.idcreateur = utilisateur.idUtilisateur
+JOIN lieu on annonce.idLieu = lieu.idLieu
+;
+
