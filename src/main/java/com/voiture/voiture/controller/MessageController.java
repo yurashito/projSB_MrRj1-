@@ -83,6 +83,44 @@ public class MessageController {
         return messageService.MessageParUtilisateur(idPersonne);
     }
 
+    // @GetMapping("/MessageParUtilisateur/{idPersonne}")
+    // public List<Message> MessageParUtilisateur(@PathVariable int idPersonne) {
+    //     return messageService.MessageParUtilisateur(idPersonne);
+    // }
+    
+    @GetMapping("/MessageParUtilisateur")
+    public ResponseEntity<Object> MessageParUtilisateur1(javax.servlet.http.HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String bearerToken = authorizationHeader.substring(7); // Supprimer "Bearer " du début
+                
+                    if(jwtTokenUtil.isTokenValid(bearerToken)){
+                        Jws<Claims> claims = jwtTokenUtil.decomposeLeToken(bearerToken);
+                        System.out.println("le idUtilisateur est : "+Integer.parseInt(claims.getBody().getSubject()));
+                        String idUtilisateur = claims.getBody().getSubject();
+                        int idPersonne= Integer.parseInt(idUtilisateur);
+                        return ResponseEntity.ok(messageService.MessageParUtilisateur(idPersonne));
+                    }else{
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                            Map.of(
+                                "status", HttpStatus.BAD_REQUEST.value(),
+                                "message", "Une erreur s'est produite : le token n'est plus valide",
+                                "timestamp", System.currentTimeMillis()
+                            )
+                        );
+                    } 
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of(
+                    "status", HttpStatus.BAD_REQUEST.value(),
+                    "message", "Une erreur s'est produite : vous n'avez pas l'authorisation desole",
+                    "timestamp", System.currentTimeMillis()
+                )
+            );
+        }
+    }
+
+
 
 }
 
