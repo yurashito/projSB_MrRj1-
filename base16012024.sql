@@ -155,14 +155,14 @@ create table annonce(
 );
 
 insert into annonce(description,imatricule,idCategorie,idMarque,idCarburant,idModel,idBoiteDeVitesse,idcouleur,idCreateur,idLieu,Annee,Prix,PourcentageAlaina) values
-    ('Une voiture de couleur rouge 4 portes idéale pour une famille' , 'TAA0011',1,1,3,1,1,1 , 1, 1, 2024 , 4000000 ,20);
+    ('Une voiture d occasion de couleur rouge 4 portes idéale pour une famille' , 'TAA0011',1,1,3,1,1,1 , 1, 1, 2024 , 4000000 ,20);
 
 insert into annonce(description,imatricule,idCategorie,idMarque,idCarburant,idModel,idBoiteDeVitesse,idcouleur,idCreateur,idLieu,Annee,Prix,PourcentageAlaina) values
-    ('Une voiture de couleur vert 4 portes' , 'TAB0201',2,3,2,1,1,4 , 2, 4, 2020 , 3500000 ,20);
+    ('Une voiture d occasion de couleur vert 4 portes' , 'TAB0201',2,3,2,1,1,4 , 2, 4, 2020 , 3500000 ,20);
 
 
 insert into annonce(description,imatricule,idCategorie,idMarque,idCarburant,idModel,idBoiteDeVitesse,idcouleur,idCreateur,idLieu,Annee,Prix,PourcentageAlaina) values
-    ('Une voiture de couleur Gris 5 portes' , 'TAM1001',8,8,1,2,2,6 , 3, 2, 2010 , 3000000 ,20);
+    ('Une voiture d occasion de couleur Gris 5 portes , 0 defaut' , 'TAM1001',8,8,1,2,2,6 , 3, 2, 2010 , 3000000 ,20);
 
 create table photoVoiture(
     idPhotoVoiture serial not null primary key,
@@ -227,25 +227,16 @@ create table notification(
 );
 
 -- possible mongodb'----------
-create table message(
-    idMessage serial not null primary key,
-    dateHeureMessage timestamp default now(),
-    idEnvoyeur int not null,
-    idReceveur int not null,
-    text varchar(200),
-    foreign key(idEnvoyeur) references utilisateur(idUtilisateur),
-    foreign key(idReceveur) references utilisateur(idUtilisateur)
-);
 -- --------------------------
 
-create table commentaire(
-    idCommentaire serial not null primary key,
-    idAnnonce int not null,
-    idUtilisateur int not null,
-    text varchar(200),
-    foreign key(idAnnonce) references annonce(idAnnonce),
-    foreign key(idUtilisateur) references utilisateur(idUtilisateur)
-);
+-- create table commentaire(
+--     idCommentaire serial not null primary key,
+--     idAnnonce int not null,
+--     idUtilisateur int not null,
+--     text varchar(200),
+--     foreign key(idAnnonce) references annonce(idAnnonce),
+--     foreign key(idUtilisateur) references utilisateur(idUtilisateur)
+-- );
 
 create or replace view V_Annonce as(
     select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricule , annonce.idCouleur as idCouleur , couleur.nomCouleur as couleur, 
@@ -270,7 +261,7 @@ select idAnnonce,description,dateheureannonce ,  annonce.imatricule as imatricul
     join lieu
     on lieu.idLieu = annonce.idLieu
     join couleur
-    on couleur.idCouleur = annonce.idCouleur
+    on couleur.idCouleur = annonce.idCouleur;
 
 
 CREATE VIEW venteParMois AS (
